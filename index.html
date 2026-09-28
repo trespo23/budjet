@@ -292,6 +292,47 @@ input,textarea{-webkit-user-select:text;user-select:text;}
 .fld input[type=date]::-webkit-date-and-time-value{text-align:left;margin:0;}
 .fld input[type=date].empty{color:transparent;}
 .fld input[type=date].empty::before{content:attr(data-empty);color:#7D8393;position:absolute;}
+
+/* ===== выбор категории и иконки ===== */
+.catgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+#detCatPick .catgrid button{background:rgba(255,255,255,.04);}
+.catgrid button{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 4px 8px;border-radius:14px;border:1px solid transparent;background:var(--elevated);color:#C9CCD5;font-family:inherit;font-size:11.5px;line-height:1.2;cursor:pointer;min-width:0;}
+.catgrid button .txic{width:38px;height:38px;border-radius:11px;}
+.catgrid button .txic svg.i{width:20px;height:20px;}
+.catgrid button span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-align:center;width:100%;word-break:break-word;}
+.catgrid button.on{border-color:#8F80FF;background:rgba(124,108,242,.16);color:var(--text);}
+.iconrow{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:13px;background:var(--elevated);border:1px solid var(--stroke);margin-bottom:12px;cursor:pointer;}
+.iconrow .t{flex:1;font-size:14.5px;color:#C9CCD5;} .iconrow .t small{display:block;font-size:12.5px;color:var(--sub);margin-top:2px;}
+.iconrow .chev{color:var(--sub);width:18px;height:18px;transition:transform .2s;}
+.iconrow.open .chev{transform:rotate(90deg);}
+.iconpick{display:none;background:var(--elevated);border:1px solid var(--stroke);border-radius:13px;padding:12px;margin:-4px 0 14px;}
+.iconpick.open{display:block;}
+.iconpick .cols{display:flex;gap:6px;justify-content:space-between;margin-bottom:12px;}
+.iconpick .cols button{width:26px;height:26px;flex-shrink:0;border-radius:50%;border:2px solid transparent;cursor:pointer;padding:0;}
+.iconpick .cols button.on{border-color:#fff;}
+.iconpick .ics{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;}
+.iconpick .ics button{aspect-ratio:1;border-radius:12px;border:1px solid transparent;background:rgba(255,255,255,.04);color:#C9CCD5;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;}
+.iconpick .ics button svg.i{width:22px;height:22px;}
+.iconpick .ics button.on{border-color:#8F80FF;background:rgba(124,108,242,.18);}
+.iconpick .reset{background:none;border:none;color:var(--sub);font-size:13.5px;margin-top:10px;padding:4px 0;cursor:pointer;font-family:inherit;}
+
+/* ===== свои категории ===== */
+.catgrid button.addcat{border:1px dashed rgba(143,128,255,.55);background:rgba(124,108,242,.06) !important;color:#A69BFF;}
+.catgrid button.addcat .plusic{width:38px;height:38px;border-radius:11px;background:rgba(124,108,242,.16);display:flex;align-items:center;justify-content:center;}
+.catgrid button.addcat .plusic svg{width:20px;height:20px;stroke:#A69BFF;stroke-width:2.2;fill:none;stroke-linecap:round;}
+.newcat{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);}
+.newcat.open{display:block;}
+.newcat .ttl{font-size:14.5px;font-weight:600;margin:0 2px 10px;}
+.newcat .fld input{height:46px;}
+.newcat .cols{display:flex;gap:6px;justify-content:space-between;margin:4px 0 12px;}
+.newcat .cols button{width:26px;height:26px;border-radius:50%;border:2px solid transparent;cursor:pointer;padding:0;flex-shrink:0;}
+.newcat .cols button.on{border-color:#fff;}
+.newcat .ics{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:12px;}
+.newcat .ics button{aspect-ratio:1;border-radius:12px;border:1px solid transparent;background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;}
+.newcat .ics button svg.i{width:22px;height:22px;}
+.newcat .ics button.on{border-color:#8F80FF;background:rgba(124,108,242,.18);}
+.newcat .err{color:var(--expense);font-size:13px;margin:-4px 2px 10px;min-height:0;}
+.delcat{background:none;border:none;color:var(--expense);font-size:13.5px;margin:10px 0 0 14px;padding:4px 0;cursor:pointer;font-family:inherit;}
 /* ===== защита входа ===== */
 html.lk .app, html.lk-cover .app{visibility:hidden;}
 .lock{position:fixed;inset:0;z-index:500;background:radial-gradient(120% 60% at 50% 0%, rgba(124,108,242,.22), rgba(124,108,242,0) 60%), #090B10;display:none;align-items:center;justify-content:center;
@@ -536,6 +577,22 @@ html.lk .lock{display:flex;}
       <div class="handle"></div>
       <div id="detBody"></div>
       <div id="detEdit">
+        <div class="lbl2">Категория</div>
+        <div class="iconrow" id="detCatRow"><span id="detCatPrev"></span><span class="t" id="detCatTxt"></span><svg class="i chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></div>
+        <div class="iconpick" id="detCatPick">
+          <div class="tt" id="detType"><button data-t="exp" class="exp">Расход</button><button data-t="inc" class="inc">Доход</button></div>
+          <div class="catgrid" id="detCats"></div>
+          <div class="newcat" id="newCat">
+            <div class="ttl" id="ncTitle">Новая категория расходов</div>
+            <div class="fld"><input type="text" id="ncName" maxlength="30" placeholder="Название, например «Питомец»" autocomplete="off"></div>
+            <div class="err" id="ncErr"></div>
+            <div class="cols" id="ncCols"></div>
+            <div class="ics" id="ncIcs"></div>
+            <button class="primary" id="ncSave">Создать категорию</button>
+          </div>
+        </div>
+        <div class="iconrow" id="detIconRow"><span id="detIconPrev"></span><span class="t" id="detIconTxt"></span><svg class="i chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></div>
+        <div class="iconpick" id="detIconPick"><div class="cols" id="detCols"></div><div class="ics" id="detIcs"></div><button class="reset" id="detIconReset">Вернуть стандартную иконку</button></div>
         <div class="lbl2">Сумма, ₽</div>
         <div class="fld"><input type="text" id="detAmt" inputmode="decimal" autocomplete="off" enterkeyhint="done"></div>
         <div class="lbl2">Дата</div>
@@ -611,14 +668,32 @@ var CAT = {
  "Зарплата":["work","#3FD37F"], "Подработка":["work","#47C99E"], "Процент с вклада":["pct","#8FA8FF"], "Премия":["gift","#47C99E"],
  "Налоговый вычет":["bill","#47C99E"], "Аренда жилья":["home","#47C99E"], "Разное":["dots","#47C99E"]
 };
+
+Object.assign(P, {
+ coffee:'<path d="M5 9h11v5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5z"/><path d="M16 10.5h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M8.5 3.5c-.6 1 .6 1.6 0 2.8M12 3.5c-.6 1 .6 1.6 0 2.8"/>',
+ fuel:'<path d="M4.5 20.5V5a1.5 1.5 0 0 1 1.5-1.5h7A1.5 1.5 0 0 1 14.5 5v15.5M3 20.5h13M7 8h5"/><path d="M14.5 10h2a1.5 1.5 0 0 1 1.5 1.5V16a1.5 1.5 0 0 0 3 0V8.5L18.5 6"/>',
+ paw:'<circle cx="7" cy="9" r="1.8"/><circle cx="11" cy="6" r="1.8"/><circle cx="15.5" cy="7" r="1.8"/><circle cx="18" cy="11" r="1.8"/><path d="M12 12c-3 0-5.5 3.3-5.5 5.4 0 1.4 1.3 2.1 2.8 1.8 1.1-.2 1.8-.6 2.7-.6s1.6.4 2.7.6c1.5.3 2.8-.4 2.8-1.8C17.5 15.3 15 12 12 12z"/>',
+ cut:'<circle cx="6.5" cy="7" r="2.5"/><circle cx="6.5" cy="17" r="2.5"/><path d="M8.6 8.4L20 17M8.6 15.6L20 7"/>',
+ pill:'<rect x="3.2" y="8.5" width="17.6" height="7" rx="3.5" transform="rotate(-45 12 12)"/><path d="M9.5 9.5l5 5"/>',
+ music:'<path d="M9 18V5.5l11-2V16"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/>',
+ film:'<rect x="3" y="4.5" width="18" height="15" rx="2.5"/><path d="M7.5 4.5v15M16.5 4.5v15M3 9.5h4.5M3 14.5h4.5M16.5 9.5H21M16.5 14.5H21"/>',
+ shirt:'<path d="M8.5 3.5L4 6l1.8 4L8 9v11.5h8V9l2.2 1L20 6l-4.5-2.5c-.5 1.5-1.8 2.5-3.5 2.5s-3-1-3.5-2.5z"/>',
+ baby:'<circle cx="12" cy="12" r="8.5"/><circle cx="9.3" cy="11" r=".9" fill="currentColor"/><circle cx="14.7" cy="11" r=".9" fill="currentColor"/><path d="M9.5 15c1.4 1 3.6 1 5 0M12 3.5c-1 1.2-.5 2.6.8 2.6"/>',
+ bank:'<path d="M3.5 9.5L12 4l8.5 5.5z"/><path d="M5.5 10v7.5M9.5 10v7.5M14.5 10v7.5M18.5 10v7.5M3.5 20h17"/>',
+ piggy:'<path d="M19.5 10.2c.7.2 1.2.8 1.2 1.6v1.1c0 .8-.6 1.4-1.3 1.5l-1.1 2.3V19h-2.6v-1.4H9.8V19H7.2v-2.2a6 6 0 0 1-2.7-5c0-3.3 3-5.9 6.7-5.9h1.5c1.5 0 2.9.4 4.1 1.2L18.9 6z"/><circle cx="15.6" cy="10.6" r=".9" fill="currentColor"/>',
+ phone:'<rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/>',
+ star:'<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/>'
+});
+var ICON_KEYS=["cart","food","coffee","car","fuel","taxi","plane","home","tool","bill","card","bank","bag","shirt","heart","pill","cut","sport","game","film","music","gift","book","wifi","phone","paw","baby","work","pct","piggy","swap","star","dots"];
+var ICON_COLORS=["#F2706F","#F2826A","#E0A870","#D8C170","#47C99E","#4CC7C0","#6F9BFF","#9B8CFF","#F07396","#A8B0C4"];
 function svg(key){ return '<svg class="i" viewBox="0 0 24 24">'+(P[key]||P.dots)+'</svg>'; }
 function rgba(hex,a){ var n=parseInt(hex.slice(1),16); return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')'; }
 function catIcon(cat, isInc){
-  var c = CAT[cat] || [isInc?"dots":"dots", isInc?"#47C99E":"#8E94A3"];
+  var c = catDef(cat, isInc);
   return '<div class="txic" style="background:'+rgba(c[1],.15)+';color:'+c[1]+'">'+svg(c[0])+'</div>';
 }
 
-var tx=[], recurring=[], limit=0, savings=[];
+var tx=[], recurring=[], limit=0, savings=[], catIcons={};
 var PIGGY_SVG='<svg class="i" viewBox="0 0 24 24"><path d="M19.5 10.2c.7.2 1.2.8 1.2 1.6v1.1c0 .8-.6 1.4-1.3 1.5l-1.1 2.3V19h-2.6v-1.4H9.8V19H7.2v-2.2a6 6 0 0 1-2.7-5c0-3.3 3-5.9 6.7-5.9h1.5c1.5 0 2.9.4 4.1 1.2L18.9 6z"/><circle cx="15.6" cy="10.6" r=".9" fill="currentColor"/><path d="M9.6 8.6h3"/></svg>';
 var now0=new Date();
 var periodIdx = now0.getMonth();
@@ -631,6 +706,9 @@ function load(){
   try{ var r2=localStorage.getItem("budget_recurring_v1"); recurring=r2?JSON.parse(r2):[]; }catch(e){ recurring=[]; }
   try{ var r3=localStorage.getItem("budget_limit_v1"); limit=r3?JSON.parse(r3):0; }catch(e){ limit=0; }
   try{ var r4=localStorage.getItem("budget_savings_v1"); savings=r4?JSON.parse(r4):[]; }catch(e){ savings=[]; }
+  try{ var r5=localStorage.getItem("budget_caticons_v1"); catIcons=r5?JSON.parse(r5):{}; }catch(e){ catIcons={}; }
+  try{ var r6=localStorage.getItem("budget_customcats_v1"); customCats=r6?JSON.parse(r6):{exp:[],inc:[]}; }catch(e){ customCats={exp:[],inc:[]}; }
+  syncCats();
 }
 function applyPendingImport(){
   try{
@@ -649,8 +727,10 @@ function save(){
   try{ localStorage.setItem("budget_recurring_v1", JSON.stringify(recurring)); }catch(e){}
   try{ localStorage.setItem("budget_limit_v1", JSON.stringify(limit)); }catch(e){}
   try{ localStorage.setItem("budget_savings_v1", JSON.stringify(savings)); }catch(e){}
+  try{ localStorage.setItem("budget_caticons_v1", JSON.stringify(catIcons)); }catch(e){}
+  try{ localStorage.setItem("budget_customcats_v1", JSON.stringify(customCats)); }catch(e){}
   if(dbDoc){
-    writeChain = writeChain.then(function(){ return dbDoc.set({tx:tx, recurring:recurring, limit:limit, savings:savings, updatedAt:new Date().toISOString()}); }).catch(function(){});
+    writeChain = writeChain.then(function(){ return dbDoc.set({tx:tx, recurring:recurring, limit:limit, savings:savings, catIcons:catIcons, customCats:customCats, updatedAt:new Date().toISOString()}); }).catch(function(){});
   }
 }
 
@@ -797,7 +877,7 @@ function renderCatGroups(v, box, total, kind){
   v.forEach(function(t){ var k=t.category||"Прочее"; if(!by[k]){ by[k]={cat:k,sum:0,items:[]}; arr.push(by[k]); } by[k].sum+=t.amount; by[k].items.push(t); });
   arr.sort(function(a,b){return b.sum-a.sum;});
   box.innerHTML = arr.map(function(g,i){
-    var col=(CAT[g.cat]||["dots","#8E94A3"])[1], p=total?Math.round(g.sum/total*100):0, n=g.items.length;
+    var col=catDef(g.cat)[1], p=total?Math.round(g.sum/total*100):0, n=g.items.length;
     var rows=g.items.slice().sort(byDateDesc).map(function(t){
       return '<div class="crow" data-id="'+t.id+'"><div class="cm"><div class="n">'+esc(dayLabel(t.date))+'</div>'+(t.note?'<div class="d">'+esc(t.note)+'</div>':'')+'</div><div class="a num">'+sg+fmt(t.amount)+'</div></div>';
     }).join("");
@@ -930,11 +1010,13 @@ function openDetail(kind,id){
   detKind=kind; detId=id; var body=document.getElementById("detBody"), edit=document.getElementById("detEdit");
   if(kind==="tx"){
     var t=tx.filter(function(x){return x.id===id;})[0]; if(!t) return;
-    body.innerHTML='<div class="det">'+catIcon(t.category,t.type==="inc")+'<div><div style="color:var(--sub);font-size:14px;">'+esc(t.category)+' · '+(t.type==="inc"?"доход":"расход")+'</div><div class="big num" id="detBig" style="color:'+(t.type==="inc"?"#3FD37F":"var(--expense)")+'">'+(t.type==="inc"?"+":"−")+fmt(t.amount)+'</div></div></div>';
+    detTmp={type:t.type==="inc"?"inc":"exp", cat:t.category||"Прочее", amount:t.amount};
+    detHead(); detRenderCats();
+    ["detIconRow","detIconPick","detCatRow","detCatPick"].forEach(function(k){ document.getElementById(k).classList.remove("open"); });
     edit.style.display="block";
     var ai=document.getElementById("detAmt"); ai.classList.remove("err");
     ai.value=String(t.amount).replace(".",",");
-    ai.oninput=function(){ var v=parseAmt(ai.value); ai.classList.toggle("err", !(v>0)); if(v>0) document.getElementById("detBig").textContent=(t.type==="inc"?"+":"−")+fmt(v); };
+    ai.oninput=function(){ var v=parseAmt(ai.value); ai.classList.toggle("err", !(v>0)); if(v>0){ detTmp.amount=v; detHead(); } };
     document.getElementById("detNote").value=t.note||"";
     var dD=document.getElementById("dwD"), dM=document.getElementById("dwM"), dY=document.getElementById("dwY");
     var days=[]; for(var d=1;d<=31;d++) days.push(String(d));
@@ -963,7 +1045,7 @@ document.getElementById("detSave").onclick=function(){
   var ai=document.getElementById("detAmt"), na=parseAmt(ai.value);
   if(!(na>0)){ ai.classList.add("err"); ai.focus(); return; }
   var found=false;
-  tx=tx.map(function(x){ if(x.id!==detId) return x; found=true; return Object.assign({},x,{date:nd,note:nn,amount:na}); });
+  tx=tx.map(function(x){ if(x.id!==detId) return x; found=true; return Object.assign({},x,{date:nd,note:nn,amount:na,type:detTmp.type,category:detTmp.cat}); });
   if(!found) return;
   save(); renderAll(); closeSheet();
 };
@@ -978,7 +1060,7 @@ function openCatsSheet(t){
   var e=Object.keys(by).map(function(k){return [k,by[k]];}).sort(function(a,b){return b[1]-a[1];});
   document.getElementById("catsTitle").textContent = (t==="exp"?"Расходы":"Доходы")+" по категориям";
   document.getElementById("catsBody").innerHTML = e.length ? e.map(function(x){
-    var c=CAT[x[0]]||["dots","#8E94A3"], p=total?Math.round(x[1]/total*100):0;
+    var c=catDef(x[0]), p=total?Math.round(x[1]/total*100):0;
     return '<div class="catline"><div class="r">'+catIcon(x[0],t==="inc")+'<div class="n">'+esc(x[0])+'<div style="font-size:13px;color:var(--sub);margin-top:2px;">'+p+'%</div></div><div class="v num">'+fmt(x[1])+'</div></div><div class="tb"><i style="width:'+p+'%;background:'+c[1]+'"></i></div></div>';
   }).join("") : '<div class="empty">Нет данных за период</div>';
   openSheet("shCats");
@@ -1034,6 +1116,7 @@ function parseOne(part, baseDate){
     for(i=0;i<KW_EXP.length;i++){ if(KW_EXP[i][0].test(sk)){ cat=KW_EXP[i][1]; hit=KW_EXP[i][0]; break; } }
     if(cat==="Прочее" && INC_VERBS.test(s)){ type="inc"; cat="Разное"; }
   }
+  var cm=customMatch(s); if(cm){ type=cm[0]; cat=cm[1]; hit=null; var ix=rest.toLowerCase().indexOf(cm[1].toLowerCase()); if(ix>=0) rest=(rest.slice(0,ix)+" "+rest.slice(ix+cm[1].length)).replace(/\s+/g," ").trim(); }
   if(hit && rest.split(" ").length===1 && hit.test(pad(rest))) rest="";   // «500 такси» — комментарий не нужен
   return {type:type, amount:Math.round(a*100)/100, category:cat, note:rest, date:baseDate};
 }
@@ -1074,7 +1157,7 @@ document.getElementById("csvBtn").onclick=function(){
   shareOrDownload("budget-"+stamp()+".csv", "﻿"+rows.map(function(r){return r.map(q).join(";");}).join("\r\n"), "text/csv");
 };
 document.getElementById("jsonBtn").onclick=function(){
-  shareOrDownload("budget-backup-"+stamp()+".json", JSON.stringify({app:"moy-budget", version:1, exportedAt:new Date().toISOString(), tx:tx, recurring:recurring, limit:limit, savings:savings}), "application/json");
+  shareOrDownload("budget-backup-"+stamp()+".json", JSON.stringify({app:"moy-budget", version:1, exportedAt:new Date().toISOString(), tx:tx, recurring:recurring, limit:limit, savings:savings, catIcons:catIcons, customCats:customCats}), "application/json");
 };
 function pickImport(){ var f=document.getElementById("impFile"); f.value=""; f.click(); }
 document.getElementById("impBtn").onclick=pickImport;
@@ -1115,6 +1198,8 @@ document.getElementById("impFile").onchange=function(e){
         recurring=Array.isArray(d.recurring)?d.recurring.map(function(o){return Object.assign({},o);}):[];
         limit=typeof d.limit==="number"?d.limit:0;
         savings=Array.isArray(d.savings)?d.savings.map(function(o){return Object.assign({},o);}):[];
+        catIcons=(d.catIcons && typeof d.catIcons==="object")?Object.assign({},d.catIcons):{};
+        customCats=(d.customCats && typeof d.customCats==="object")?{exp:(d.customCats.exp||[]).slice(), inc:(d.customCats.inc||[]).slice()}:{exp:[],inc:[]}; syncCats(); refreshSelects();
         save(); renderAll(); closeSheet(); toast("Загружено операций: "+tx.length);
       } else {
         var add=parseCsv(text);
@@ -1237,6 +1322,114 @@ document.getElementById("svDel").onclick=function(){
 };
 document.getElementById("savAdd").onclick=function(){ openSav(null); };
 
+/* ===== смена категории операции и иконки категории ===== */
+var detTmp={type:"exp", cat:"Прочее", amount:0};
+function catDef(cat, isInc){ return (catIcons && catIcons[cat]) || CAT[cat] || ["dots", isInc?"#47C99E":"#8E94A3"]; }
+function detHead(){
+  var inc=detTmp.type==="inc";
+  document.getElementById("detBody").innerHTML='<div class="det">'+catIcon(detTmp.cat,inc)+'<div><div style="color:var(--sub);font-size:14px;">'+esc(detTmp.cat)+' · '+(inc?"доход":"расход")+'</div><div class="big num" id="detBig" style="color:'+(inc?"#3FD37F":"var(--expense)")+'">'+(inc?"+":"−")+fmt(detTmp.amount)+'</div></div></div>';
+}
+function detRenderCats(){
+  var list=detTmp.type==="inc"?INC_CATS:EXP_CATS, g=document.getElementById("detCats");
+  document.querySelectorAll("#detType button").forEach(function(b){ b.classList.toggle("active", b.dataset.t===detTmp.type); });
+  g.innerHTML=list.map(function(c,i){ return '<button data-i="'+i+'" class="'+(c===detTmp.cat?"on":"")+'">'+catIcon(c,detTmp.type==="inc")+'<span>'+esc(c)+'</span></button>'; }).join("")+
+    '<button class="addcat" id="addCatBtn"><span class="plusic"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span><span>Своя категория</span></button>';
+  document.getElementById("addCatBtn").onclick=ncOpen;
+  document.getElementById("newCat").classList.remove("open");
+  g.querySelectorAll("button[data-i]").forEach(function(b){ b.onclick=function(){ detTmp.cat=list[+b.dataset.i]; detRenderCats(); detHead(); detRenderIcon();
+    document.getElementById("detCatRow").classList.remove("open"); document.getElementById("detCatPick").classList.remove("open"); }; });
+  document.getElementById("detCatPrev").innerHTML=catIcon(detTmp.cat, detTmp.type==="inc");
+  document.getElementById("detCatTxt").innerHTML=esc(detTmp.cat)+'<small>'+(detTmp.type==="inc"?"доход":"расход")+' · нажми, чтобы сменить</small>';
+  detRenderIcon();
+}
+function detRenderIcon(){
+  var d=catDef(detTmp.cat, detTmp.type==="inc"), custom=!!(catIcons&&catIcons[detTmp.cat]);
+  document.getElementById("detIconPrev").innerHTML=catIcon(detTmp.cat, detTmp.type==="inc");
+  document.getElementById("detCatPrev").innerHTML=catIcon(detTmp.cat, detTmp.type==="inc");
+  document.getElementById("detIconTxt").innerHTML='Иконка категории<small>'+(custom?"своя · ":"")+'меняется для всех операций «'+esc(detTmp.cat)+'»</small>';
+  document.getElementById("detCols").innerHTML=ICON_COLORS.map(function(col){ return '<button data-c="'+col+'" style="background:'+col+'" class="'+(col.toLowerCase()===String(d[1]).toLowerCase()?"on":"")+'" aria-label="цвет"></button>'; }).join("");
+  document.getElementById("detIcs").innerHTML=ICON_KEYS.map(function(k){ return '<button data-k="'+k+'" class="'+(k===d[0]?"on":"")+'" style="color:'+d[1]+'">'+svg(k)+'</button>'; }).join("");
+  document.getElementById("detIconReset").style.display=custom&&!isCustomCat(detTmp.cat)?"inline-block":"none";
+  var dc=document.getElementById("delCatBtn");
+  if(isCustomCat(detTmp.cat)){ if(!dc){ dc=document.createElement("button"); dc.id="delCatBtn"; dc.className="delcat"; document.getElementById("detIconPick").appendChild(dc); }
+    dc.textContent="Удалить категорию «"+detTmp.cat+"»"; dc.style.display="inline-block"; dc.onclick=function(){ deleteCustomCat(detTmp.cat); }; }
+  else if(dc){ dc.style.display="none"; }
+  document.querySelectorAll("#detCols button").forEach(function(b){ b.onclick=function(){ setCatIcon(detTmp.cat,[catDef(detTmp.cat)[0], b.dataset.c]); }; });
+  document.querySelectorAll("#detIcs button").forEach(function(b){ b.onclick=function(){ setCatIcon(detTmp.cat,[b.dataset.k, catDef(detTmp.cat)[1]]); }; });
+}
+function setCatIcon(cat, def){
+  var n=Object.assign({}, catIcons||{});
+  if(def) n[cat]=def; else delete n[cat];
+  catIcons=n; save(); renderAll(); detHead(); detRenderCats();
+}
+document.querySelectorAll("#detType button").forEach(function(b){ b.onclick=function(){
+  if(detTmp.type===b.dataset.t) return;
+  detTmp.type=b.dataset.t; var list=detTmp.type==="inc"?INC_CATS:EXP_CATS;
+  if(list.indexOf(detTmp.cat)<0) detTmp.cat = detTmp.type==="inc" ? "Разное" : "Прочее";
+  detRenderCats(); detHead();
+}; });
+document.getElementById("detCatRow").onclick=function(){ this.classList.toggle("open"); document.getElementById("detCatPick").classList.toggle("open"); };
+document.getElementById("detIconRow").onclick=function(){ this.classList.toggle("open"); document.getElementById("detIconPick").classList.toggle("open"); };
+document.getElementById("detIconReset").onclick=function(){ setCatIcon(detTmp.cat, null); };
+
+/* ===== свои категории ===== */
+var BASE_EXP=EXP_CATS.slice(), BASE_INC=INC_CATS.slice(), customCats={exp:[],inc:[]}, nc={icon:"star", color:"#9B8CFF"};
+function syncCats(){
+  if(!customCats || typeof customCats!=="object") customCats={exp:[],inc:[]};
+  var ce=Array.isArray(customCats.exp)?customCats.exp:[], ci=Array.isArray(customCats.inc)?customCats.inc:[];
+  EXP_CATS=BASE_EXP.concat(ce.filter(function(n){ return BASE_EXP.indexOf(n)<0; }));
+  INC_CATS=BASE_INC.concat(ci.filter(function(n){ return BASE_INC.indexOf(n)<0; }));
+}
+function isCustomCat(name){ return (customCats.exp||[]).indexOf(name)>=0 || (customCats.inc||[]).indexOf(name)>=0; }
+function refreshSelects(){
+  try{ setAddType(addType); var rc=document.getElementById("rCat"), v=rc.value; fillCats(rc, EXP_CATS); if(EXP_CATS.indexOf(v)>=0) rc.value=v; }catch(e){}
+}
+function customMatch(s){
+  var low=" "+s.toLowerCase()+" ", best=null;
+  ["exp","inc"].forEach(function(t){ (customCats[t]||[]).forEach(function(n){ var k=n.toLowerCase(); if(k && low.indexOf(k)>=0 && (!best || k.length>best[1].length)) best=[t,n]; }); });
+  return best;
+}
+function ncRender(){
+  document.getElementById("ncTitle").textContent = detTmp.type==="inc" ? "Новая категория доходов" : "Новая категория расходов";
+  document.getElementById("ncCols").innerHTML=ICON_COLORS.map(function(c){ return '<button data-c="'+c+'" style="background:'+c+'" class="'+(c===nc.color?"on":"")+'" aria-label="цвет"></button>'; }).join("");
+  document.getElementById("ncIcs").innerHTML=ICON_KEYS.map(function(k){ return '<button data-k="'+k+'" class="'+(k===nc.icon?"on":"")+'" style="color:'+nc.color+'">'+svg(k)+'</button>'; }).join("");
+  document.querySelectorAll("#ncCols button").forEach(function(b){ b.onclick=function(){ nc.color=b.dataset.c; ncRender(); }; });
+  document.querySelectorAll("#ncIcs button").forEach(function(b){ b.onclick=function(){ nc.icon=b.dataset.k; ncRender(); }; });
+}
+function ncOpen(){
+  nc={icon:"star", color:detTmp.type==="inc"?"#47C99E":"#9B8CFF"};
+  document.getElementById("ncName").value=""; document.getElementById("ncErr").textContent="";
+  ncRender(); document.getElementById("newCat").classList.add("open");
+  setTimeout(function(){ var n=document.getElementById("newCat"); n.scrollIntoView({block:"nearest",behavior:"smooth"}); document.getElementById("ncName").focus(); }, 60);
+}
+document.getElementById("ncName").addEventListener("input",function(){ document.getElementById("ncErr").textContent=""; });
+document.getElementById("ncSave").onclick=function(){
+  var name=document.getElementById("ncName").value.replace(/\s+/g," ").trim(), err=document.getElementById("ncErr");
+  if(!name){ err.textContent="Введи название"; document.getElementById("ncName").focus(); return; }
+  var all=EXP_CATS.concat(INC_CATS).map(function(x){ return x.toLowerCase(); });
+  if(all.indexOf(name.toLowerCase())>=0){ err.textContent="Такая категория уже есть"; return; }
+  var t=detTmp.type==="inc"?"inc":"exp", n={exp:(customCats.exp||[]).slice(), inc:(customCats.inc||[]).slice()};
+  n[t].push(name); customCats=n; syncCats();
+  var ic=Object.assign({}, catIcons||{}); ic[name]=[nc.icon, nc.color]; catIcons=ic;
+  save(); refreshSelects(); renderAll();
+  detTmp.cat=name; document.getElementById("newCat").classList.remove("open");
+  detRenderCats(); detHead();
+  document.getElementById("detCatRow").classList.remove("open"); document.getElementById("detCatPick").classList.remove("open");
+  toast("Категория «"+name+"» создана");
+};
+function deleteCustomCat(name){
+  if(!confirm("Удалить категорию «"+name+"»? Её операции перейдут в «"+(customCats.inc.indexOf(name)>=0?"Разное":"Прочее")+"».")) return;
+  var isInc=(customCats.inc||[]).indexOf(name)>=0, fallback=isInc?"Разное":"Прочее";
+  customCats={exp:(customCats.exp||[]).filter(function(x){return x!==name;}), inc:(customCats.inc||[]).filter(function(x){return x!==name;})};
+  syncCats();
+  tx=tx.map(function(x){ return x.category===name ? Object.assign({},x,{category:fallback}) : x; });
+  recurring=recurring.map(function(x){ return x.category===name ? Object.assign({},x,{category:fallback}) : x; });
+  var ic=Object.assign({}, catIcons||{}); delete ic[name]; catIcons=ic;
+  if(detTmp.cat===name) detTmp.cat=fallback;
+  save(); refreshSelects(); renderAll(); detRenderCats(); detHead();
+  toast("Категория удалена");
+}
+
 load(); applyPendingImport();
 setAddType("exp"); fillCats(document.getElementById("rCat"), EXP_CATS);
 renderAll();
@@ -1245,7 +1438,7 @@ if("serviceWorker" in navigator && /^https?:/.test(location.protocol)){
 }
 if(navigator.storage && navigator.storage.persist){ navigator.storage.persist().catch(function(){}); }
 var FORGOT_TEXT="Сбросить защиту? Все данные на этом телефоне будут удалены. Вернуть их можно из резервной копии.";
-function FORGOT_WIPE(){ try{ ["budget_tx_v1","budget_recurring_v1","budget_limit_v1","budget_savings_v1"].forEach(function(k){ localStorage.removeItem(k); }); }catch(e){} tx=[]; recurring=[]; limit=0; savings=[]; }
+function FORGOT_WIPE(){ try{ ["budget_tx_v1","budget_recurring_v1","budget_limit_v1","budget_savings_v1","budget_caticons_v1","budget_customcats_v1"].forEach(function(k){ localStorage.removeItem(k); }); }catch(e){} tx=[]; recurring=[]; limit=0; savings=[]; }
 var FACE_UNAVAILABLE="Недоступно на этом устройстве";
 
 /* ===== Защита входа: ПИН / пароль / Face ID ===== */
