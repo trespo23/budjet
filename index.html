@@ -145,35 +145,12 @@ main{padding:4px 16px calc(100px + env(safe-area-inset-bottom,0px));}
 .seg{display:flex;gap:6px;background:var(--surface);border:1px solid var(--stroke);border-radius:26px;padding:5px;margin-top:6px;}
 .seg button{flex:1;min-width:0;white-space:nowrap;padding:0 6px;height:42px;border-radius:21px;border:1px solid rgba(255,255,255,.08);background:transparent;color:#B5BAC6;font-size:14.5px;cursor:pointer;}
 .seg button.active{border-color:transparent;color:#fff;font-weight:500;background:linear-gradient(90deg,#7C6CF2,#6F6BF7);box-shadow:0 4px 16px rgba(124,108,242,.35);}
-.opsh{display:flex;align-items:center;justify-content:space-between;margin:12px 2px 0;min-height:44px;}
+.opsh{display:flex;align-items:center;justify-content:space-between;margin:22px 2px 0;min-height:44px;}
 .opsh h2{font-size:22px;font-weight:700;margin:0;}
 .search{display:none;margin-top:12px;}
 .search.open{display:block;}
 .search input{width:100%;height:44px;border-radius:14px;border:1px solid var(--stroke);background:var(--surface);color:var(--text);font-size:15px;padding:0 14px;outline:none;}
 
-.srow{display:flex;align-items:center;gap:10px;}
-.sinp{position:relative;display:flex;align-items:center;flex:1;min-width:0;}
-.scancel{flex-shrink:0;border:none;background:none;color:#A69BFF;font-size:15.5px;font-family:inherit;padding:10px 2px;cursor:pointer;}
-.search.open{animation:sIn .18s ease;}
-@keyframes sIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
-.sinp svg.i{position:absolute;left:13px;width:18px;height:18px;color:var(--sub);pointer-events:none;}
-.search .sinp input{padding:0 40px 0 38px;height:46px;-webkit-appearance:none;appearance:none;}
-.search .sinp input::-webkit-search-cancel-button{display:none;}
-.search .sinp input:focus{border-color:rgba(124,108,242,.6);}
-#searchClr{position:absolute;right:6px;width:34px;height:34px;border:none;border-radius:50%;background:rgba(255,255,255,.08);color:#C9CCD5;font-size:20px;line-height:1;cursor:pointer;display:none;}
-#searchClr.show{display:block;}
-.sugg{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:10px -16px 0;padding:0 16px 2px;}
-.sugg::-webkit-scrollbar{display:none;}
-.sugg:empty{display:none;}
-.sch{flex-shrink:0;display:flex;align-items:center;gap:7px;height:36px;padding:0 13px;border-radius:18px;border:1px solid var(--stroke);background:var(--surface);color:#D5D8E0;font-size:14px;font-family:inherit;cursor:pointer;white-space:nowrap;}
-.sch i{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
-.sch small{color:var(--sub);font-size:12px;}
-.sch .kd{color:var(--sub);font-size:11.5px;}
-.sch mark,.txrow mark{background:none;color:#B3A8FF;font-weight:600;}
-.sch.on{background:rgba(124,108,242,.22);border-color:rgba(143,128,255,.6);color:#fff;}
-.sres{font-size:13.5px;color:var(--sub);margin:12px 2px 0;}
-.sres b{color:var(--text);font-weight:600;}
-.sres .x{color:var(--expense);} .sres .p{color:#3FD37F;}
 /* bottom nav */
 .nav{position:fixed;left:0;right:0;bottom:0;z-index:50;transform:translateZ(0);-webkit-transform:translateZ(0);max-width:480px;margin:0 auto;display:flex;align-items:center;gap:4px;
   padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px));background:rgba(12,14,20,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--line);}
@@ -212,41 +189,6 @@ main{padding:4px 16px calc(100px + env(safe-area-inset-bottom,0px));}
 .crow .n{font-size:15px;}
 .crow .d{font-size:13px;color:var(--sub);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .crow .a{font-size:15px;font-weight:500;color:#D5D8E0;white-space:nowrap;}
-
-/* breakdown chart */
-.bd{background:var(--surface);border:1px solid rgba(255,255,255,.05);border-radius:22px;padding:18px 16px 14px;margin-top:8px;}
-.bd .tot{text-align:center;font-size:34px;line-height:1.15;font-weight:700;letter-spacing:-1px;}
-.bd .dl{text-align:center;font-size:14px;margin-top:4px;color:var(--sub);}
-.bd .dl.good{color:#3FD37F;}.bd .dl.bad{color:var(--expense);}
-.bars{display:flex;align-items:flex-end;gap:10px;height:170px;margin-top:14px;padding:0 2px;}
-.bcol{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;cursor:pointer;}
-.bcol .bv{font-size:13px;font-weight:600;margin-bottom:6px;white-space:nowrap;}
-.bcol .bb{width:100%;max-width:74px;border-radius:14px 14px 8px 8px;background:linear-gradient(180deg,#F2F3F6 0%,#6B6F7B 100%);height:0;transition:height .55s cubic-bezier(.2,.8,.2,1);min-height:6px;}
-.bd.inc .bcol .bb{background:linear-gradient(180deg,#9BF0C9 0%,#2E7F63 100%);}
-.bcol .bl{font-size:12px;color:var(--sub);margin-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
-.bars.net{justify-content:center;gap:28px;}
-.bars.net .bcol{flex:0 0 100px;}
-.bars.net .bb{max-width:110px;}
-.bars.net .bv{font-size:14px;}
-.bars.net .bl{font-size:13px;}
-.bcol .bb.inc{background:linear-gradient(180deg,#9BF0C9 0%,#2E7F63 100%);}
-.dwrap{margin-top:20px;}
-.daily{width:100%;height:152px;display:block;}
-.dleg{display:flex;gap:16px;justify-content:center;font-size:12.5px;color:var(--sub);margin-bottom:4px;}
-.dleg i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:1px;}
-.car{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin:0 -18px;overscroll-behavior-x:contain;}
-.car::-webkit-scrollbar{display:none;}
-.slide{flex:0 0 100%;scroll-snap-align:center;scroll-snap-stop:always;padding:0 18px;min-width:0;}
-.slide .chart{height:180px;display:flex;flex-direction:column;justify-content:flex-end;}
-.slide .bars{margin-top:0;}
-.slide .dwrap{margin-top:0;}
-.dots{display:flex;justify-content:center;gap:8px;margin-top:12px;}
-.dots button{width:8px;height:8px;border-radius:4px;border:none;padding:0;background:#3A3F4E;cursor:pointer;transition:width .25s,background .25s;}
-.dots button.on{width:22px;background:#8F80FF;}
-.tiles{display:flex;gap:10px;margin-top:14px;}
-.tile{flex:1;background:var(--elevated);border-radius:16px;padding:12px 14px;min-width:0;}
-.tile .k{font-size:13px;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.tile .v{font-size:22px;font-weight:700;margin-top:3px;letter-spacing:-.4px;white-space:nowrap;}
 
 /* sheets */
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;display:none;align-items:flex-end;}
@@ -427,6 +369,22 @@ html.lk .lock{display:flex;}
 .lkset .status .t{font-size:16px;font-weight:600;} .lkset .status .c{font-size:13.5px;color:var(--sub);margin-top:2px;}
 .lkset .ghost, .lkset .primary{margin-top:10px;}
 .lkset .tgl{margin-top:10px;}
+
+/* выбор категорий для PDF */
+.rpic{width:34px;height:34px;flex:none;border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(124,108,242,.15);color:var(--accent);}
+.rpic .i{width:18px;height:18px;}
+.rppick{display:none;margin:-4px 0 14px;}
+.rppick.open{display:block;}
+.rpq{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;}
+.rpq button{font:inherit;font-size:13px;padding:7px 11px;border-radius:10px;background:transparent;border:1px solid var(--stroke);color:#C9CCD5;cursor:pointer;}
+.rph{font-size:12px;color:var(--sub);margin:12px 2px 7px;text-transform:uppercase;letter-spacing:.05em;}
+.rpchips{display:flex;flex-wrap:wrap;gap:6px;}
+.rpchip{font:inherit;display:flex;align-items:center;gap:7px;padding:7px 11px;border-radius:12px;background:var(--elevated);border:1px solid var(--stroke);color:var(--sub);font-size:13.5px;cursor:pointer;opacity:.5;text-align:left;}
+.rpchip.on{opacity:1;color:var(--text);border-color:rgba(124,108,242,.6);background:rgba(124,108,242,.13);}
+.rpchip i{width:8px;height:8px;border-radius:50%;flex:none;}
+.rpchip small{color:var(--sub);font-size:12px;}
+.rpempty{font-size:13.5px;color:var(--sub);padding:8px 2px;}
+#budgetCard{display:none !important;}
 </style>
 <script>try{if(localStorage.getItem("budget_lock_v1"))document.documentElement.classList.add("lk");}catch(e){}</script>
 </head>
@@ -540,8 +498,7 @@ html.lk .lock{display:flex;}
         <button id="segInc">Доходы</button>
       </div>
       <div class="opsh"><h2>Операции</h2><button class="hbtn" id="searchBtn" aria-label="Поиск" style="margin-right:-10px;"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></button></div>
-      <div class="search" id="searchBox"><div class="srow"><div class="sinp"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input type="search" id="searchInput" placeholder="Сумма, категория или комментарий" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="search"><button id="searchClr" aria-label="Очистить">×</button></div><button class="scancel" id="searchCancel">Отмена</button></div><div class="sugg" id="suggBox"></div><div class="sres" id="sRes"></div></div>
-      <div id="opsChart"></div>
+      <div class="search" id="searchBox"><input type="text" id="searchInput" placeholder="Поиск по категории или комментарию"></div>
       <div class="opstot" id="opsTotal"></div>
       <div class="mode" id="expMode"><button id="mCat" class="active">По категориям</button><button id="mDay">По дням</button></div>
       <div id="opsList"></div>
@@ -679,7 +636,10 @@ html.lk .lock{display:flex;}
     <div class="sheet" id="shExp">
       <div class="handle"></div>
       <h3>Данные</h3>
-      <button class="primary" id="csvBtn">Скачать CSV для Google Таблиц</button>
+      <div class="iconrow" id="rpCatRow"><span class="rpic"><svg class="i" viewBox="0 0 24 24"><path d="M4 5h16l-6.2 7.4V19l-3.6-1.8v-4.8z"/></svg></span><span class="t">Категории в отчёте<small id="rpCatSum">все</small></span><svg class="i chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></div>
+      <div class="rppick" id="rpCatPick"><div class="rpq"><button data-q="all">Все</button><button data-q="exp">Только расходы</button><button data-q="inc">Только доходы</button><button data-q="none">Снять все</button></div><div id="rpCatList"></div></div>
+      <button class="primary" id="pdfBtn">PDF-отчёт</button>
+      <button class="ghost" id="csvBtn">Скачать CSV для Google Таблиц</button>
       <button class="ghost" id="jsonBtn">Сохранить резервную копию</button>
       <button class="ghost" id="impBtn">Загрузить из файла…</button>
       <div class="note">Данные хранятся только на этом телефоне и работают без интернета. Раз в месяц сохраняй резервную копию — например, в «Файлы» → iCloud Drive. Загрузка принимает резервную копию (.json) целиком или CSV (операции добавятся к текущим).</div>
@@ -692,7 +652,6 @@ html.lk .lock{display:flex;}
 var EXP_CATS = ["Автомобиль","Продукты питания","Развлечения и подарки","Здоровье","Шоппинг","ЖКУ","Кредит/долги","Поездки (транспорт, такси)","Путешествия","Учеба","Связь (телефон, интернет)","Налоги","Строительные материалы ремонт","Кафе, рестораны","Спорт","Прочее","Обмен на валюту"];
 var INC_CATS = ["Зарплата","Подработка","Процент с вклада","Премия","Налоговый вычет","Аренда жилья","Разное","Обмен на валюту"];
 var MONTHS = ["январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь"];
-var MONTHS_PREP = ["январе","феврале","марте","апреле","мае","июне","июле","августе","сентябре","октябре","ноябре","декабре"];
 var MONTHS_GEN = ["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
 var WD = ["вс","пн","вт","ср","чт","пт","сб"];
 var PENDING_IMPORT = {id:"none", items:[]};
@@ -856,7 +815,7 @@ function renderHome(){
   if(limit>0){
     var rem=limit-mExp;
     document.getElementById("remVal").textContent=fmt(rem);
-    document.getElementById("remCap").textContent = rem>=0 ? "Можно потратить до конца месяца" : "Лимит превышен";
+    document.getElementById("remCap").textContent = (rem>=0 ? "Можно потратить до конца месяца" : "Лимит превышен")+" · потрачено "+fmt0(mExp);
     remChipBox.style.display="block";
     document.getElementById("remChip").textContent=Math.max(0,Math.round(rem/limit*100))+"%";
     document.getElementById("remChipCap").textContent="из "+fmt0(limit);
@@ -865,7 +824,7 @@ function renderHome(){
   } else {
     var mc=carryBefore(bm);
     document.getElementById("remVal").textContent=fmt(mc+mInc-mExp);
-    document.getElementById("remCap").textContent= Math.abs(mc)>=0.01 ? "С учётом остатка прошлых месяцев" : "Доходы минус расходы за месяц";
+    document.getElementById("remCap").textContent= Math.abs(mc)>=0.01 ? "С учётом остатка прошлых месяцев · нажми, чтобы задать лимит" : "Доходы минус расходы · нажми, чтобы задать лимит";
     remChipBox.style.display="none"; remBarWrap.style.display="none";
   }
   document.getElementById("budVal").textContent=fmt(mExp);
@@ -913,284 +872,22 @@ function fmtDue(due){
 }
 function plural(n,f){ var a=n%10,b=n%100; return f[(a===1&&b!==11)?0:(a>=2&&a<=4&&(b<10||b>=20))?1:2]; }
 function periodWord(){ return periodIdx===-1 ? "за всё время" : "за "+MONTHS[periodIdx]; }
-function shortCat(c){ var w=(c||"Прочее").split(/[ ,(\/]/)[0]; return w||c; }
-function kfmt(n){ return new Intl.NumberFormat("ru-RU",{maximumFractionDigits:0}).format(Math.round(n)); }
-
-function daysInPeriod(v){
-  if(periodIdx===-1){ var ds=v.map(function(t){return t.date;}).filter(Boolean).sort(); return ds.length?Math.max(1,Math.round((new Date(ds[ds.length-1])-new Date(ds[0]))/864e5)+1):1; }
-  return periodIdx===now0.getMonth() ? now0.getDate() : new Date(now0.getFullYear(),periodIdx+1,0).getDate();
-}
-function dailyChart(v){
-  var y=now0.getFullYear(), m=periodIdx===-1?now0.getMonth():periodIdx, nd=new Date(y,m+1,0).getDate();
-  var I=[],E=[]; for(var i=0;i<nd;i++){I.push(0);E.push(0);}
-  v.forEach(function(t){ if(!t.date) return; var d=+t.date.slice(8,10)-1; if(d<0||d>=nd) return; (t.type==="inc"?I:E)[d]+=t.amount; });
-  var mxI=Math.max.apply(null,I.concat([1])), mxE=Math.max.apply(null,E.concat([1])), mx=Math.max(mxI,mxE);
-  var W=320, up=65, dn=65, H=up+dn+22, bw=W/nd, gap=Math.max(1.5,bw*.28), tIdx=(periodIdx===now0.getMonth())?now0.getDate()-1:-1;
-  var o='<svg class="daily" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none"><defs>'+
-    '<linearGradient id="gI" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9BF0C9"/><stop offset="1" stop-color="#2E7F63"/></linearGradient>'+
-    '<linearGradient id="gE" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6B6F7B"/><stop offset="1" stop-color="#F2F3F6"/></linearGradient></defs>';
-  if(tIdx>=0) o+='<rect x="'+(tIdx*bw)+'" y="0" width="'+bw+'" height="'+(up+dn)+'" fill="rgba(124,108,242,.14)" rx="3"/>';
-  for(var d=0;d<nd;d++){
-    var x=d*bw+gap/2, w=bw-gap;
-    if(I[d]>0){ var h=Math.max(2,I[d]/mx*up); o+='<rect x="'+x+'" y="'+(up-h)+'" width="'+w+'" height="'+h+'" rx="'+Math.min(2.5,w/2)+'" fill="url(#gI)"/>'; }
-    if(E[d]>0){ var h2=Math.max(2,E[d]/mx*dn); o+='<rect x="'+x+'" y="'+(up+1)+'" width="'+w+'" height="'+h2+'" rx="'+Math.min(2.5,w/2)+'" fill="url(#gE)"/>'; }
-  }
-  o+='<line x1="0" x2="'+W+'" y1="'+(up+.5)+'" y2="'+(up+.5)+'" stroke="rgba(255,255,255,.18)" stroke-width="1"/>';
-  [1,5,10,15,20,25,nd].forEach(function(d){ o+='<text x="'+((d-.5)*bw)+'" y="'+(H-4)+'" text-anchor="middle" font-size="9" fill="#8E94A3">'+d+'</text>'; });
-  o+='</svg>';
-  var leg='<div class="dleg"><span><i style="background:#47C99E"></i>доходы ↑</span><span><i style="background:#C9CCD5"></i>расходы ↓</span></div>';
-  return '<div class="dwrap">'+leg+o+'</div>';
-}
-function dayTiles(v){
-  var y=now0.getFullYear(), m=periodIdx===-1?now0.getMonth():periodIdx, E={};
-  v.forEach(function(t){ if(t.type==="exp"&&t.date) E[t.date]=(E[t.date]||0)+t.amount; });
-  var best=null; Object.keys(E).forEach(function(k){ if(!best||E[k]>E[best]) best=k; });
-  var n=daysInPeriod(v), free=0;
-  if(periodIdx!==-1){ for(var d=1;d<=n;d++){ var k=y+"-"+String(m+1).padStart(2,"0")+"-"+String(d).padStart(2,"0"); if(!E[k]) free++; } }
-  var bl = best ? (+best.slice(8,10))+" "+MONTHS_GEN[+best.slice(5,7)-1] : "—";
-  return '<div class="tiles"><div class="tile"><div class="k">Пик трат за день</div><div class="v num">'+(best?fmt0(E[best]):"—")+'</div><div class="k" style="margin-top:1px;font-size:12px">'+bl+'</div></div>'+
-    '<div class="tile"><div class="k">Дней без трат</div><div class="v num">'+(periodIdx===-1?"—":free)+'</div><div class="k" style="margin-top:1px;font-size:12px">из '+(periodIdx===-1?"—":n)+'</div></div></div>';
-}
-
-function monthsData(v){
-  var by={}, keys=[];
-  v.forEach(function(t){ if(!t.date) return; var k=t.date.slice(0,7); if(!by[k]){ by[k]={k:k,i:0,e:0}; keys.push(k); } by[k][t.type==="inc"?"i":"e"]+=t.amount; });
-  keys.sort(); return keys.slice(-12).map(function(k){ return by[k]; });
-}
-function kShort(n){ n=Math.round(n); return n>=1e6 ? (Math.round(n/1e5)/10+"м").replace(".",",") : (n>=1000 ? Math.round(n/1000)+"к" : String(n)); }
-function monthLbl(k){ return MON_SHORT[+k.slice(5,7)-1]; }
-function monthlyChart(ms){
-  var n=ms.length, W=320, up=128, H=up+20, gw=W/n, bw=Math.min(gw*0.34,26), mx=1;
-  ms.forEach(function(m){ mx=Math.max(mx,m.i,m.e); });
-  var o='<svg class="daily" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none">'+
-    '<defs><linearGradient id="mI" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9BF0C9"/><stop offset="1" stop-color="#2E7F63"/></linearGradient>'+
-    '<linearGradient id="mE" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F2F3F6"/><stop offset="1" stop-color="#6B6F7B"/></linearGradient></defs>';
-  var top=14, avail=up-top;
-  ms.forEach(function(m,k){
-    var cx=k*gw+gw/2, hi=Math.max(2,m.i/mx*avail), he=Math.max(2,m.e/mx*avail);
-    if(m.i>0) o+='<rect x="'+(cx-bw-1.5)+'" y="'+(up-hi)+'" width="'+bw+'" height="'+hi+'" rx="4" fill="url(#mI)"/>';
-    if(m.e>0) o+='<rect x="'+(cx+1.5)+'" y="'+(up-he)+'" width="'+bw+'" height="'+he+'" rx="4" fill="url(#mE)"/>';
-    if(n<=6){
-      if(m.i>0) o+='<text x="'+(cx-bw/2-1.5)+'" y="'+(up-hi-4)+'" text-anchor="middle" font-size="9" font-weight="600" fill="#9BF0C9">'+kShort(m.i)+'</text>';
-      if(m.e>0) o+='<text x="'+(cx+bw/2+1.5)+'" y="'+(up-he-4)+'" text-anchor="middle" font-size="9" font-weight="600" fill="#D5D8E0">'+kShort(m.e)+'</text>';
-    }
-    o+='<text x="'+cx+'" y="'+(H-4)+'" text-anchor="middle" font-size="10" fill="#8E94A3">'+monthLbl(m.k)+'</text>';
-    o+='<rect class="mhit" data-m="'+m.k+'" x="'+(k*gw)+'" y="0" width="'+gw+'" height="'+H+'" fill="transparent" style="cursor:pointer"/>';
-  });
-  o+='<line x1="0" x2="'+W+'" y1="'+(up+.5)+'" y2="'+(up+.5)+'" stroke="rgba(255,255,255,.14)" stroke-width="1"/></svg>';
-  return '<div class="dwrap"><div class="dleg"><span><i style="background:#47C99E"></i>доходы</span><span><i style="background:#C9CCD5"></i>расходы</span></div>'+o+'</div>';
-}
-function monthlyNetChart(ms){
-  var n=ms.length, W=320, gw=W/n, bw=Math.min(gw*0.5,34), mx=1, hp=false, hn=false;
-  ms.forEach(function(m){ var x=m.i-m.e; mx=Math.max(mx,Math.abs(x)); if(x>=0) hp=true; else hn=true; });
-  var up = hn ? (hp ? 62 : 16) : 124, dn = 124-up, H=up+dn+20;
-  var o='<svg class="daily" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none">';
-  ms.forEach(function(m,k){
-    var cx=k*gw+gw/2, net=m.i-m.e, pos=net>=0, h=Math.max(2,Math.abs(net)/mx*((pos?up:dn)-14));
-    o+='<rect x="'+(cx-bw/2)+'" y="'+(pos?up-h:up+1)+'" width="'+bw+'" height="'+h+'" rx="4" fill="'+(pos?"#3FD37F":"#F06F78")+'" opacity=".85"/>';
-    if(n<=8) o+='<text x="'+cx+'" y="'+(pos?up-h-4:up+h+11)+'" text-anchor="middle" font-size="9" font-weight="600" fill="'+(pos?"#9BF0C9":"#F59AA0")+'">'+(pos?"+":"−")+kShort(Math.abs(net))+'</text>';
-    o+='<text x="'+cx+'" y="'+(H-4)+'" text-anchor="middle" font-size="10" fill="#8E94A3">'+monthLbl(m.k)+'</text>';
-    o+='<rect class="mhit" data-m="'+m.k+'" x="'+(k*gw)+'" y="0" width="'+gw+'" height="'+H+'" fill="transparent" style="cursor:pointer"/>';
-  });
-  o+='<line x1="0" x2="'+W+'" y1="'+(up+.5)+'" y2="'+(up+.5)+'" stroke="rgba(255,255,255,.18)" stroke-width="1"/></svg>';
-  return '<div class="dwrap"><div class="dleg"><span><i style="background:#3FD37F"></i>остаток за месяц</span><span><i style="background:#F06F78"></i>перерасход</span></div>'+o+'</div>';
-}
-function allTimeSlides(v,rateK,rateTxt,rate,exp){
-  var ms=monthsData(v), n=Math.max(1,ms.length);
-  var best=null, worst=null;
-  ms.forEach(function(m){ var x=m.i-m.e; if(!best||x>best.i-best.e) best=m; if(!worst||x<worst.i-worst.e) worst=m; });
-  function mName(m){ var i=+m.k.slice(5,7)-1; return MONTHS[i]+" "+m.k.slice(0,4); }
-  function sg(x){ return (x>=0?"+":"")+fmt0(x); }
-  var t1='<div class="tiles"><div class="tile"><div class="k">'+rateK+'</div><div class="v num" style="color:'+(rate===null?"var(--text)":(rate>=0?"#3FD37F":"var(--expense)"))+'">'+rateTxt+'</div><div class="k" style="margin-top:1px;font-size:12px">'+(rate===null?"нет доходов":"от доходов")+'</div></div>'+
-    '<div class="tile"><div class="k">Расход в месяц</div><div class="v num">~'+fmt0(exp/n)+'</div><div class="k" style="margin-top:1px;font-size:12px">в среднем за '+n+' '+plural(n,["месяц","месяца","месяцев"])+'</div></div></div>';
-  var t2='<div class="tiles"><div class="tile"><div class="k">Лучший месяц</div><div class="v num" style="color:'+(best&&best.i-best.e>=0?"#3FD37F":"var(--expense)")+'">'+(best?sg(best.i-best.e):"—")+'</div><div class="k" style="margin-top:1px;font-size:12px">'+(best?mName(best):"")+'</div></div>'+
-    '<div class="tile"><div class="k">Худший месяц</div><div class="v num" style="color:'+(worst&&worst.i-worst.e>=0?"#3FD37F":"var(--expense)")+'">'+(worst?sg(worst.i-worst.e):"—")+'</div><div class="k" style="margin-top:1px;font-size:12px">'+(worst?mName(worst):"")+'</div></div></div>';
-  return '<div class="slide"><div class="chart">'+monthlyChart(ms)+'</div>'+t1+'</div>'+
-         '<div class="slide"><div class="chart">'+monthlyNetChart(ms)+'</div>'+t2+'</div>';
-}
-var netSlide=0;
-function renderNetChart(el){
-  var v=periodTx(); if(!v.length){ el.innerHTML=""; return; }
-  var inc=sum(v,"inc"), exp=sum(v,"exp"), net=inc-exp;
-  var dl="";
-  if(periodIdx>0){
-    var pm=periodIdx-1, pv=tx.filter(function(t){return monthOf(t)===pm;});
-    if(pv.length){
-      var pnet=sum(pv,"inc")-sum(pv,"exp"), d=net-pnet;
-      dl='<div class="dl '+(Math.abs(d)<1?"":(d>0?"good":"bad"))+'">'+(Math.abs(d)<1?"как в "+MONTHS_PREP[pm]:(d>0?"↑ на ":"↓ на ")+fmt0(Math.abs(d))+(d>0?" лучше":" хуже")+", чем в "+MONTHS_PREP[pm])+'</div>';
-    }
-  }
-  var mx=Math.max(inc,exp,1);
-  var rate = inc>0 ? net/inc*100 : null, neg = net<-0.5;
-  var ra = rate===null ? 0 : Math.abs(rate), rr = ra>0 && ra<1 ? "<1" : String(Math.round(ra));
-  var rateTxt = rate===null ? "—" : rr+"%";
-  var rateK = neg ? "Перерасход" : "Отложено";
-  if(rate!==null) rate = neg ? -1 : 1;
-  var col = net>0.5 ? "#3FD37F" : (net<-0.5 ? "var(--expense)" : "var(--text)");
-  el.innerHTML='<div class="bd"><div class="tot num" style="color:'+col+'">'+(net>0.5?"+":"")+fmt0(net)+'</div>'+
-    '<div class="dl" style="margin-top:2px">'+(neg?"расходы больше доходов":"осталось "+periodWord())+" · "+v.length+" "+plural(v.length,["операция","операции","операций"])+'</div>'+dl+
-    '<div class="car" id="netCar">'+
-    (periodIdx===-1 ? allTimeSlides(v,rateK,rateTxt,rate,exp) : (
-     '<div class="slide"><div class="chart"><div class="bars net">'+
-      '<div class="bcol" data-go="inc"><div class="bv num">'+kfmt(inc)+'</div><div class="bb inc" data-h="'+Math.max(4,Math.round(inc/mx*100))+'"></div><div class="bl">Доходы</div></div>'+
-      '<div class="bcol" data-go="exp"><div class="bv num">'+kfmt(exp)+'</div><div class="bb" data-h="'+Math.max(4,Math.round(exp/mx*100))+'"></div><div class="bl">Расходы</div></div>'+
-     '</div></div>'+
-     '<div class="tiles"><div class="tile"><div class="k">'+rateK+'</div><div class="v num" style="color:'+(rate===null?"var(--text)":(rate>=0?"#3FD37F":"var(--expense)"))+'">'+rateTxt+'</div><div class="k" style="margin-top:1px;font-size:12px">'+(rate===null?"нет доходов":"от доходов")+'</div></div>'+
-     '<div class="tile"><div class="k">Расход в день</div><div class="v num">~'+fmt0(exp/daysInPeriod(v))+'</div><div class="k" style="margin-top:1px;font-size:12px">в среднем</div></div></div></div>'+
-     '<div class="slide"><div class="chart">'+dailyChart(v)+'</div>'+dayTiles(v)+'</div>'))+
-    '</div><div class="dots" id="netDots"><button class="'+(netSlide===0?"on":"")+'" aria-label="Итоги"></button><button class="'+(netSlide===1?"on":"")+'" aria-label="По дням"></button></div></div>';
-  var car=el.querySelector("#netCar"), dots=el.querySelectorAll("#netDots button");
-  car.scrollLeft=netSlide*car.clientWidth;
-  car.addEventListener("scroll",function(){ var i=Math.round(car.scrollLeft/Math.max(1,car.clientWidth)); if(i!==netSlide){ netSlide=i; dots.forEach(function(d,k){ d.classList.toggle("on",k===i); }); } },{passive:true});
-  dots.forEach(function(d,k){ d.onclick=function(){ car.scrollTo({left:k*car.clientWidth,behavior:"smooth"}); }; });
-  var bars=el.querySelectorAll(".bb");
-  requestAnimationFrame(function(){ requestAnimationFrame(function(){ bars.forEach(function(b){ b.style.height=(+b.dataset.h*1.12)+"px"; }); }); });
-  el.querySelectorAll(".bcol").forEach(function(c){ c.onclick=function(){ expMode="cat"; setOps(c.dataset.go); }; });
-  el.querySelectorAll(".mhit").forEach(function(r){ r.addEventListener("click",function(){ periodIdx=+r.getAttribute("data-m").slice(5,7)-1; renderAll(); window.scrollTo({top:0,behavior:"smooth"}); }); });
-}
-function renderOpsChart(kind){
-  var el=document.getElementById("opsChart");
-  if(kind==="all"){ renderNetChart(el); return; }
-  var v=periodTx().filter(function(t){return t.type===kind;});
-  if(!v.length){ el.innerHTML=""; return; }
-  var tot=v.reduce(function(s,t){return s+t.amount;},0);
-  var by={}, arr=[];
-  v.forEach(function(t){ var k=t.category||"Прочее"; if(!by[k]){by[k]={cat:k,sum:0};arr.push(by[k]);} by[k].sum+=t.amount; });
-  arr.sort(function(a,b){return b.sum-a.sum;});
-  var top=arr.slice(0,4);
-  var mx=Math.max.apply(null, top.map(function(g){return g.sum;}));
-  var dl="";
-  if(periodIdx>0){
-    var pm=periodIdx-1, prev=tx.filter(function(t){return t.type===kind && monthOf(t)===pm;}).reduce(function(s,t){return s+t.amount;},0);
-    if(prev>0){
-      var d=tot-prev, less=d<0, good = kind==="exp" ? less : !less;
-      dl='<div class="dl '+(Math.abs(d)<1?"":(good?"good":"bad"))+'">'+(Math.abs(d)<1?"как в "+MONTHS_PREP[pm]:(less?"↓ на ":"↑ на ")+fmt0(Math.abs(d))+(less?" меньше":" больше")+", чем в "+MONTHS_PREP[pm])+'</div>';
-    }
-  }
-  var days;
-  if(periodIdx===-1){ var ds=v.map(function(t){return t.date;}).filter(Boolean).sort(); days=ds.length?Math.max(1,Math.round((new Date(ds[ds.length-1])-new Date(ds[0]))/864e5)+1):1; }
-  else { var y=now0.getFullYear(); days = periodIdx===now0.getMonth() ? now0.getDate() : new Date(y,periodIdx+1,0).getDate(); }
-  el.innerHTML='<div class="bd '+kind+'"><div class="tot num">'+fmt0(tot)+'</div>'+dl+
-    '<div class="bars">'+top.map(function(g,i){ return '<div class="bcol" data-i="'+i+'"><div class="bv num">'+kfmt(g.sum)+'</div><div class="bb" data-h="'+Math.max(4,Math.round(g.sum/mx*100))+'"></div><div class="bl">'+esc(g.other?g.cat:shortCat(g.cat))+'</div></div>'; }).join("")+'</div>'+
-    '<div class="tiles"><div class="tile"><div class="k">Операций</div><div class="v num">'+v.length+'</div></div><div class="tile"><div class="k">В день</div><div class="v num">~'+fmt0(tot/days)+'</div></div></div></div>';
-  var bars=el.querySelectorAll(".bb");
-  requestAnimationFrame(function(){ requestAnimationFrame(function(){ bars.forEach(function(b){ b.style.height=(+b.dataset.h*1.12)+"px"; }); }); });
-  el.querySelectorAll(".bcol").forEach(function(c){
-    var g=top[+c.dataset.i]; if(g.other) return;
-    c.onclick=function(){ expMode="cat"; openCats[g.cat]=true; renderOps();
-      var t=document.querySelector('#opsList .cg.open'); var all=document.querySelectorAll('#opsList .cg');
-      all.forEach(function(x){ if(x.querySelector('.chd .n').textContent===g.cat) t=x; });
-      if(t) window.scrollTo({top:t.getBoundingClientRect().top+window.pageYOffset-150,behavior:"smooth"}); };
-  });
-}
-/* ===== поиск ===== */
-var searchOpen=false, searchSel=null;
-function nrm(s){ return String(s||"").toLowerCase().replace(/ё/g,"е"); }
-function isNumQ(q){ return /^[\d\s\u00a0.,]+$/.test(q) && /\d/.test(q); }
-function amtKey(a){ return String(Math.round(a*100)/100).replace(".",","); }
-function numQ(q){ return q.replace(/[\s\u00a0]/g,"").replace(".",","); }
-function wordsOf(s){ return nrm(s).split(/[^a-zа-я0-9]+/).filter(Boolean); }
-function qWords(q){ return wordsOf(q); }
-function textHit(t, ws){ var w=wordsOf((t.category||"")+" "+(t.note||"")); return ws.every(function(q){ return w.some(function(x){ return x.indexOf(q)===0; }); }); }
-function searchPool(){ var v = searchQ||searchSel ? tx : periodTx(); return opsTab==="all" ? v : v.filter(function(t){ return t.type===opsTab; }); }
-function searchMatch(t){
-  if(searchSel){
-    if(searchSel.k==="amt") return amtKey(t.amount)===searchSel.v;
-    if(searchSel.k==="cat") return t.category===searchSel.v;
-    return nrm(t.note).trim()===searchSel.v;
-  }
-  if(!searchQ) return true;
-  if(isNumQ(searchQ)){ var n=numQ(searchQ); return amtKey(t.amount).indexOf(n)===0; }
-  return textHit(t, qWords(searchQ));
-}
-function suggestions(){
-  var pool=(opsTab==="all"?tx:tx.filter(function(t){return t.type===opsTab;})), out=[];
-  var q=searchQ;
-  if(!q){
-    var c={}; pool.forEach(function(t){ var k=t.category||"Прочее"; c[k]=(c[k]||0)+1; });
-    return Object.keys(c).sort(function(a,b){return c[b]-c[a];}).slice(0,8).map(function(k){ return {k:"cat",v:k,label:k,n:c[k]}; });
-  }
-  if(isNumQ(q)){
-    var n=numQ(q), m={};
-    pool.forEach(function(t){ var k=amtKey(t.amount); if(k.indexOf(n)===0){ if(!m[k]) m[k]={k:"amt",v:k,label:fmt(t.amount),n:0,amt:t.amount}; m[k].n++; } });
-    return Object.keys(m).map(function(k){return m[k];}).sort(function(a,b){ return a.amt-b.amt; }).slice(0,10);
-  }
-  var ws=qWords(q), cats={}, notes={};
-  pool.forEach(function(t){
-    var ck=t.category||"Прочее";
-    if(ws.every(function(w){ return wordsOf(ck).some(function(x){return x.indexOf(w)===0;}); })){ cats[ck]=(cats[ck]||0)+1; }
-    var nk=nrm(t.note).trim();
-    if(nk && ws.every(function(w){ return wordsOf(nk).some(function(x){return x.indexOf(w)===0;}); })){ if(!notes[nk]) notes[nk]={k:"note",v:nk,label:t.note.trim(),n:0}; notes[nk].n++; }
-  });
-  Object.keys(cats).sort(function(a,b){return cats[b]-cats[a];}).forEach(function(k){ out.push({k:"cat",v:k,label:k,n:cats[k]}); });
-  Object.keys(notes).map(function(k){return notes[k];}).sort(function(a,b){return b.n-a.n;}).forEach(function(o){ out.push(o); });
-  return out.slice(0,10);
-}
-function hlText(s, ws){
-  s=String(s||""); if(!ws||!ws.length) return esc(s);
-  var re=new RegExp("(^|[^a-zа-яё0-9])("+ws.map(function(w){ return w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&").replace(/е/g,"[её]"); }).join("|")+")","gi");
-  var out="", last=0, m;
-  while((m=re.exec(s))){ var st=m.index+m[1].length; out+=esc(s.slice(last,st))+"<mark>"+esc(m[2])+"</mark>"; last=st+m[2].length; if(re.lastIndex===m.index) re.lastIndex++; }
-  return out+esc(s.slice(last));
-}
-function sRow(t){
-  var ws = (searchQ && !isNumQ(searchQ) && !searchSel) ? qWords(searchQ) : (searchSel&&searchSel.k!=="amt" ? qWords(searchSel.label||searchSel.v) : null);
-  var amtHL = (searchSel&&searchSel.k==="amt") || (searchQ&&isNumQ(searchQ));
-  var meta=[t.note?hlText(t.note,ws):"", esc(dshort(t.date)+"."+(t.date||"").slice(2,4))].filter(Boolean).join(" • ");
-  var a=(t.type==="inc"?"+":"−")+fmt(t.amount);
-  return '<div class="txrow" data-id="'+t.id+'">'+catIcon(t.category,t.type==="inc")+'<div class="txb"><div class="txm"><div class="n">'+hlText(t.category||"Без категории",ws)+'</div><div class="d">'+meta+'</div></div><div class="txa num '+t.type+'">'+(amtHL?'<mark style="color:inherit">'+a+'</mark>':a)+'</div></div></div>';
-}
-function renderSugg(){
-  var box=document.getElementById("suggBox");
-  if(!searchOpen){ box.innerHTML=""; return; }
-  if(searchSel){
-    box.innerHTML='<button class="sch on" id="selChip">✓ '+esc(searchSel.label)+' <small>×</small></button>';
-    document.getElementById("selChip").onclick=function(){ searchSel=null; renderOps(); document.getElementById("searchInput").focus(); };
-    return;
-  }
-  var list=suggestions(), ws=qWords(searchQ||"");
-  // авто-точное совпадение: единственный вариант и введён полностью
-  if(searchQ && list.length===1){
-    var o=list[0], full = o.k==="amt" ? (o.v===numQ(searchQ)) : (nrm(o.label)===nrm(searchQ).trim());
-    if(full){ searchSel=o; return renderSugg(); }
-  }
-  box.innerHTML=list.map(function(o,i){
-    var dot = o.k==="cat" ? '<i style="background:'+catDef(o.v)[1]+'"></i>' : (o.k==="amt" ? '' : '<span class="kd">✎</span>');
-    var lab = o.k==="amt" ? '<mark>'+esc(o.label)+'</mark>' : hlText(o.label, ws);
-    return '<button class="sch" data-i="'+i+'">'+dot+'<span>'+lab+'</span><small>'+o.n+'</small></button>';
-  }).join("");
-  box.querySelectorAll(".sch").forEach(function(b){ b.onclick=function(){
-    var o=list[+b.dataset.i]; searchSel=o; searchQ=o.label; document.getElementById("searchInput").value=o.label;
-    document.getElementById("searchInput").blur(); renderOps(); }; });
-}
 function renderOps(){
-  var chartEl=document.getElementById("opsChart");
-  chartEl.style.display = searchOpen ? "none" : "";
-  if(!searchOpen) renderOpsChart(opsTab);
-  document.getElementById("searchClr").classList.toggle("show", !!(searchQ||searchSel));
-  renderSugg();
-  var active = searchOpen && (searchQ || searchSel);
-  var v = active ? searchPool().filter(searchMatch) : periodTx();
-  if(!active && opsTab!=="all") v=v.filter(function(t){return t.type===opsTab;});
-  document.getElementById("expMode").classList.toggle("show", opsTab!=="all" && !active);
+  var v=periodTx();
+  if(opsTab!=="all") v=v.filter(function(t){return t.type===opsTab;});
+  if(searchQ){ var q=searchQ.toLowerCase(); v=v.filter(function(t){ return (t.category||"").toLowerCase().indexOf(q)>=0 || (t.note||"").toLowerCase().indexOf(q)>=0; }); }
+  document.getElementById("expMode").classList.toggle("show", opsTab!=="all");
   document.getElementById("mCat").classList.toggle("active", expMode==="cat");
   document.getElementById("mDay").classList.toggle("active", expMode==="day");
   var tot=v.reduce(function(s,t){return s+t.amount;},0);
-  var ot=document.getElementById("opsTotal");
-  ot.style.display = (!searchOpen && opsTab==="all" && !periodTx().length) ? "" : "none";
-  ot.textContent = opsTab==="all" ? v.length+" "+plural(v.length,["операция","операции","операций"])+" "+periodWord()
+  document.getElementById("opsTotal").textContent = opsTab==="all" ? v.length+" "+plural(v.length,["операция","операции","операций"])+" "+periodWord()
     : (opsTab==="exp"?"Расходы ":"Доходы ")+periodWord()+" — "+fmt(tot);
-  var sr=document.getElementById("sRes");
-  if(active){
-    var e=sum(v,"exp"), i=sum(v,"inc");
-    sr.innerHTML = v.length ? 'Найдено <b>'+v.length+'</b> '+plural(v.length,["операция","операции","операций"])+' по всей истории'+(e?' · <span class="x">−'+fmt0(e)+'</span>':'')+(i?' · <span class="p">+'+fmt0(i)+'</span>':'') : '';
-  } else sr.innerHTML = searchOpen ? 'Начните вводить — подскажу варианты из истории' : '';
   var box=document.getElementById("opsList");
-  if(!v.length){ box.innerHTML='<div class="empty">'+(active?"Ничего не найдено":"Операций за период нет")+'</div>'; return; }
-  if(!active && opsTab!=="all" && expMode==="cat"){ renderCatGroups(v, box, tot, opsTab); return; }
+  if(!v.length){ box.innerHTML='<div class="empty">'+(searchQ?"Ничего не найдено":"Операций за период нет")+'</div>'; return; }
+  if(opsTab!=="all" && expMode==="cat"){ renderCatGroups(v, box, tot, opsTab); return; }
   var sorted=v.slice().sort(byDateDesc), groups=[], by={};
   sorted.forEach(function(t){ var k=t.date||""; if(!by[k]){by[k]=[];groups.push(k);} by[k].push(t); });
-  box.innerHTML = groups.map(function(k){ return '<div class="day">'+esc(dayLabel(k))+'</div>'+by[k].map(active?sRow:txRow).join(""); }).join("");
+  box.innerHTML = groups.map(function(k){ return '<div class="day">'+esc(dayLabel(k))+'</div>'+by[k].map(txRow).join(""); }).join("");
   bindRows(box);
 }
 function renderCatGroups(v, box, total, kind){
@@ -1228,7 +925,6 @@ function renderPayTotal(){
 function renderAll(){ renderHeader(); renderHome(); renderOps(); renderPayTotal(); renderSavings(); renderNav(); }
 
 function show(scr){
-  if(scr!=="ops" && typeof searchOpen!=="undefined" && searchOpen) closeSearch();
   document.getElementById("scrHome").classList.toggle("active", scr==="home");
   document.getElementById("scrOps").classList.toggle("active", scr==="ops");
   document.getElementById("scrPay").classList.toggle("active", scr==="pay");
@@ -1280,30 +976,12 @@ document.getElementById("perPick").onclick=function(){
   requestAnimationFrame(function(){ list.scrollTop=i*44; markWheel(); });
 };
 document.getElementById("perDone").onclick=function(){ markWheel(); periodIdx=wOpts[wIdx].idx; renderAll(); closeSheet(); };
-function closeSearch(){ clearTimeout(sIdle); searchOpen=false; searchQ=""; searchSel=null; document.getElementById("searchInput").value=""; document.getElementById("searchBox").classList.remove("open"); document.getElementById("searchBtn").classList.remove("accent"); renderOps(); }
 document.getElementById("searchBtn").onclick=function(){
-  if(searchOpen){ closeSearch(); return; }
-  searchOpen=true; document.getElementById("searchBox").classList.add("open"); document.getElementById("searchBtn").classList.add("accent");
-  renderOps(); document.getElementById("searchInput").focus(); sPoke();
+  var b=document.getElementById("searchBox"); b.classList.toggle("open");
+  if(b.classList.contains("open")) document.getElementById("searchInput").focus();
+  else { searchQ=""; document.getElementById("searchInput").value=""; renderOps(); }
 };
-document.getElementById("searchInput").oninput=function(e){ searchQ=e.target.value.trim(); searchSel=null; renderOps(); };
-document.getElementById("searchInput").addEventListener("keydown",function(e){
-  if(e.key==="Enter"){ var l=suggestions(), q=searchQ; var hit=l.filter(function(o){ return o.k==="amt" ? o.v===numQ(q) : nrm(o.label)===nrm(q); })[0]; if(hit){ searchSel=hit; renderOps(); } e.target.blur(); }
-  if(e.key==="Escape") closeSearch();
-});
-document.getElementById("searchCancel").onclick=function(){ closeSearch(); window.scrollTo({top:0,behavior:"smooth"}); };
-/* авто-возврат: ушёл с поля, ничего не ввёл */
-document.getElementById("searchInput").addEventListener("blur",function(){
-  setTimeout(function(){ if(searchOpen && !searchQ && !searchSel && document.activeElement!==document.getElementById("searchInput")) closeSearch(); }, 300);
-});
-/* авто-возврат: долго без действий */
-var sIdle=null;
-function sPoke(){ clearTimeout(sIdle); if(searchOpen) sIdle=setTimeout(function(){ if(searchOpen && document.activeElement!==document.getElementById("searchInput") && !document.getElementById("ov").classList.contains("open")) closeSearch(); }, 60000); }
-["touchstart","scroll","keydown","click"].forEach(function(ev){ window.addEventListener(ev, sPoke, {passive:true}); });
-/* авто-возврат: приложение свернули */
-document.addEventListener("visibilitychange",function(){ if(document.hidden && searchOpen) closeSearch(); });
-document.getElementById("searchClr").onclick=function(){ searchQ=""; searchSel=null; var i=document.getElementById("searchInput"); i.value=""; renderOps(); i.focus(); };
-
+document.getElementById("searchInput").oninput=function(e){ searchQ=e.target.value.trim(); renderOps(); };
 
 /* sheets */
 function openSheet(id){ document.querySelectorAll(".sheet").forEach(function(s){ s.classList.toggle("show", s.id===id); }); document.getElementById("ov").classList.add("open"); }
@@ -1770,6 +1448,342 @@ function deleteCustomCat(name){
   save(); refreshSelects(); renderAll(); detRenderCats(); detHead();
   toast("Категория удалена");
 }
+
+var PDF_TWO_STEP=true;   /* iPhone разрешает «Поделиться» только сразу после нажатия — поэтому сначала готовим, потом сохраняем */
+function deliverPdf(name, bytes){ shareOrDownload(name, bytes, "application/pdf"); return Promise.resolve(); }
+
+/* ===== PDF-отчёт: страницы рисуются на canvas и собираются в PDF без сторонних библиотек ===== */
+var RP={W:595.28, H:841.89, S:2.1, M:40,
+  c:{text:"#14161C", sub:"#5F6675", faint:"#9AA0AE", line:"#E6E8EE", card:"#F5F6FA", head:"#EEF0F6", accent:"#7C6CF2", inc:"#1FA774", exp:"#E2505C", track:"#ECEEF3"},
+  f:'-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif'};
+var MON_SH=["янв","фев","мар","апр","май","июн","июл","авг","сен","окт","ноя","дек"];
+function rpPeriodLabel(){ return periodIdx===-1 ? "За всё время" : MONTHS[periodIdx].charAt(0).toUpperCase()+MONTHS[periodIdx].slice(1)+" "+now0.getFullYear(); }
+function rpK(v){ v=Math.abs(v); if(v>=1e6) return (Math.round(v/1e5)/10).toString().replace(".",",")+" млн"; if(v>=1000) return Math.round(v/1000)+" тыс"; return String(Math.round(v)); }
+function rpNice(m){ if(m<=0) return 1000; var p=Math.pow(10,Math.floor(Math.log10(m))), n=m/p; return (n<=1?1:n<=2?2:n<=2.5?2.5:n<=5?5:10)*p; }
+
+function Report(title){
+  this.pages=[]; this.title=title; this.newPage();
+}
+Report.prototype.newPage=function(){
+  var cv=document.createElement("canvas"); cv.width=Math.round(RP.W*RP.S); cv.height=Math.round(RP.H*RP.S);
+  var x=cv.getContext("2d"); x.scale(RP.S,RP.S); x.fillStyle="#fff"; x.fillRect(0,0,RP.W,RP.H); x.textBaseline="alphabetic";
+  this.cv=cv; this.x=x; this.pages.push(cv); this.y=46;
+  if(this.pages.length>1){
+    this.t("Мой бюджет · "+this.title, RP.M, 30, {size:8.5, color:RP.c.faint});
+    this.x.fillStyle=RP.c.line; this.x.fillRect(RP.M, 38, RP.W-2*RP.M, 0.6); this.y=58;
+  }
+};
+Report.prototype.ensure=function(h){ if(this.y+h>RP.H-48){ this.newPage(); return true; } return false; };
+Report.prototype.font=function(size,w){ this.x.font=(w||400)+" "+size+"px "+RP.f; };
+Report.prototype.fit=function(s,maxW){ s=String(s); if(!maxW || this.x.measureText(s).width<=maxW) return s; while(s.length>1 && this.x.measureText(s+"…").width>maxW) s=s.slice(0,-1); return s+"…"; };
+Report.prototype.t=function(s,x,y,o){ o=o||{}; this.font(o.size||10,o.weight); this.x.fillStyle=o.color||RP.c.text; this.x.textAlign=o.align||"left"; this.x.fillText(this.fit(s,o.maxW),x,y); this.x.textAlign="left"; };
+Report.prototype.rr=function(x,y,w,h,r,fill){ var c=this.x; r=Math.min(r,h/2,w/2); c.beginPath(); c.moveTo(x+r,y); c.arcTo(x+w,y,x+w,y+h,r); c.arcTo(x+w,y+h,x,y+h,r); c.arcTo(x,y+h,x,y,r); c.arcTo(x,y,x+w,y,r); c.closePath(); c.fillStyle=fill; c.fill(); };
+Report.prototype.section=function(title, sub, need){
+  this.ensure((need||0)+40);
+  this.y+=8; this.t(title, RP.M, this.y+12, {size:13.5, weight:700});
+  if(sub) this.t(sub, RP.W-RP.M, this.y+12, {size:9, color:RP.c.faint, align:"right"});
+  this.y+=26;
+};
+Report.prototype.table=function(cols, rows, o){
+  o=o||{}; var me=this, W=RP.W-2*RP.M, rh=19, hh=22;
+  var total=cols.reduce(function(a,c){return a+c.w;},0), k=W/total;
+  function head(){
+    me.rr(RP.M, me.y, W, hh, 6, RP.c.head);
+    var x=RP.M; cols.forEach(function(c){ var w=c.w*k; me.t(c.title, c.align==="right"?x+w-8:x+8, me.y+14.5, {size:8.5, weight:600, color:RP.c.sub, align:c.align==="right"?"right":"left", maxW:w-12}); x+=w; });
+    me.y+=hh;
+  }
+  this.ensure(hh+rh*Math.min(rows.length,3)); head();
+  rows.forEach(function(r, ri){
+    if(me.ensure(rh+(o.total&&ri===rows.length-1?4:0))) head();
+    var isTot=o.total && ri===rows.length-1, x=RP.M;
+    if(isTot){ me.x.fillStyle=RP.c.text; me.x.fillRect(RP.M, me.y, W, 0.8); }
+    cols.forEach(function(c,ci){
+      var cell=r[ci], w=c.w*k, s=cell, col=null, bold=isTot;
+      if(cell && typeof cell==="object"){ s=cell.t; col=cell.c; bold=bold||cell.b; if(cell.dot){ me.x.beginPath(); me.x.arc(x+12, me.y+9.5, 3.6, 0, Math.PI*2); me.x.fillStyle=cell.dot; me.x.fill(); } }
+      var pad=(cell&&cell.dot)?22:8;
+      me.t(s==null?"":s, c.align==="right"?x+w-8:x+pad, me.y+13, {size:9.2, weight:bold?700:400, color:col||RP.c.text, align:c.align==="right"?"right":"left", maxW:w-pad-6});
+      x+=w;
+    });
+    me.y+=rh;
+    if(!isTot && ri<rows.length-1){ me.x.fillStyle=RP.c.line; me.x.fillRect(RP.M+6, me.y-0.3, W-12, 0.5); }
+  });
+  this.y+=12;
+};
+Report.prototype.finish=function(stamp){
+  var n=this.pages.length, me=this;
+  this.pages.forEach(function(cv,i){
+    var c=cv.getContext("2d"); c.setTransform(RP.S,0,0,RP.S,0,0);
+    me.x=c;
+    c.fillStyle=RP.c.line; c.fillRect(RP.M, RP.H-34, RP.W-2*RP.M, 0.6);
+    me.t("Сформировано "+stamp+" · Мой бюджет", RP.M, RP.H-20, {size:8, color:RP.c.faint});
+    me.t("Стр. "+(i+1)+" из "+n, RP.W-RP.M, RP.H-20, {size:8, color:RP.c.faint, align:"right"});
+  });
+};
+
+function rpMonthsData(){
+  var by={};
+  tx.forEach(function(t){ if(!t.date || !rpFilter(t)) return; var k=t.date.slice(0,7); if(!by[k]) by[k]={inc:0,exp:0}; by[k][t.type==="inc"?"inc":"exp"]+=t.amount; });
+  var keys=Object.keys(by).sort();
+  if(periodIdx!==-1){ var sel=now0.getFullYear()+"-"+String(periodIdx+1).padStart(2,"0"); if(!by[sel]) { by[sel]={inc:0,exp:0}; keys.push(sel); keys.sort(); } keys=keys.filter(function(k){return k<=sel;}).slice(-6); }
+  else keys=keys.slice(-12);
+  return keys.map(function(k){ return {k:k, inc:by[k].inc, exp:by[k].exp}; });
+}
+function rpByCat(list){
+  var by={}, arr=[], total=0;
+  list.forEach(function(t){ var k=t.category||"Прочее"; if(!by[k]){ by[k]={cat:k,sum:0,n:0}; arr.push(by[k]); } by[k].sum+=t.amount; by[k].n++; total+=t.amount; });
+  arr.sort(function(a,b){return b.sum-a.sum;}); return {arr:arr,total:total};
+}
+
+function buildReport(){
+  var flt=rpActive(), v=periodTx().filter(rpFilter), inc=sum(v,"inc"), exp=sum(v,"exp"), bal=inc-exp, isMonth=periodIdx!==-1;
+  var carry=(isMonth&&!flt)?carryBefore(periodIdx):0, d=new Date();
+  var stamp=String(d.getDate()).padStart(2,"0")+"."+String(d.getMonth()+1).padStart(2,"0")+"."+d.getFullYear();
+  var label=rpPeriodLabel(), R=new Report("Отчёт · "+label), c=RP.c, W=RP.W-2*RP.M;
+
+  /* шапка */
+  [[0,14],[9,20],[18,16],[27,26]].forEach(function(b){ R.rr(RP.W-RP.M-34+b[0], 40+26-b[1], 6, b[1], 3, c.accent); });
+  R.t("Отчёт о бюджете", RP.M, 62, {size:24, weight:700});
+  R.t(label+(isMonth?"":" · "+v.length+" "+plural(v.length,["операция","операции","операций"])), RP.M, 82, {size:12, color:c.sub});
+  R.y=100;
+  if(flt){ R.rr(RP.M, 92, W, 22, 7, c.card); R.t("Категории: "+rpNames(), RP.M+10, 106.5, {size:9, color:c.sub, maxW:W-20}); R.y=124; }
+
+  /* показатели */
+  var nInc=v.filter(function(t){return t.type==="inc";}).length, nExp=v.length-nInc;
+  var cards=[["Доходы", fmt0(inc), c.inc, nInc+" "+plural(nInc,["операция","операции","операций"])],
+             ["Расходы", fmt0(exp), c.exp, nExp+" "+plural(nExp,["операция","операции","операций"])],
+             [isMonth?"Итог месяца":"Итог за период", (bal>0?"+":"")+fmt0(bal), bal>=0?c.inc:c.exp, "доходы − расходы"]];
+  if(isMonth && Math.abs(carry)>=0.01) cards.push(["Итоговый баланс", fmt0(carry+bal), c.text, "с переносом "+(carry>0?"+":"")+fmt0(carry)]);
+  else if(isMonth && limit>0 && !flt) cards.push(["Бюджет месяца", Math.round(exp/limit*100)+"%", exp>limit?c.exp:c.accent, "из "+fmt0(limit)]);
+  else { var days=isMonth?new Date(now0.getFullYear(),periodIdx+1,0).getDate():Math.max(1,new Set(v.map(function(t){return t.date;})).size); cards.push(["В среднем в день", fmt0(exp/days), c.text, "расходы"]); }
+  var only = flt && (inc===0 || exp===0) && (inc+exp)>0 ? (inc>0?"inc":"exp") : null;
+  if(only){
+    var pv=periodTx(), allS=sum(pv,only), mine=only==="inc"?inc:exp, nOnly=only==="inc"?nInc:nExp, colO=only==="inc"?c.inc:c.exp;
+    var dd=isMonth?new Date(now0.getFullYear(),periodIdx+1,0).getDate():Math.max(1,new Set(v.map(function(t){return t.date;})).size);
+    cards=[[only==="inc"?"Доходы":"Расходы", fmt0(mine), colO, "по выбранным категориям"],
+           [only==="inc"?"Доля от всех доходов":"Доля от всех расходов", (allS?Math.round(mine/allS*100):0)+"%", c.accent, "из "+fmt0(allS)],
+           ["Операций", String(nOnly), c.text, plural(nOnly,["операция","операции","операций"])],
+           ["В среднем в день", fmt0(mine/dd), c.text, only==="inc"?"доходы":"расходы"]];
+  }
+  var cw=(W-3*10)/4;
+  cards.forEach(function(k,i){ var x=RP.M+i*(cw+10); R.rr(x,R.y,cw,64,10,c.card);
+    R.t(k[0], x+12, R.y+18, {size:9, color:c.sub}); R.t(k[1], x+12, R.y+40, {size:15, weight:700, color:k[2], maxW:cw-20}); R.t(k[3], x+12, R.y+55, {size:8.2, color:c.faint, maxW:cw-20}); });
+  R.y+=76;
+  var tot=inc+exp, ip=tot>0?inc/tot:0.5;
+  if(only){ var sh=allS?mine/allS:0; R.rr(RP.M, R.y, W, 7, 3.5, c.track); if(sh>0) R.rr(RP.M, R.y, Math.max(7,W*sh), 7, 3.5, colO);
+    R.t("Выбранные категории "+Math.round(sh*100)+"%", RP.M, R.y+21, {size:8.5, color:colO, weight:600});
+    R.t("остальные "+(100-Math.round(sh*100))+"%", RP.W-RP.M, R.y+21, {size:8.5, color:c.faint, weight:600, align:"right"}); R.y+=34; }
+  else {
+  R.rr(RP.M, R.y, W, 7, 3.5, c.track);
+  if(tot>0){ R.rr(RP.M, R.y, Math.max(7,W*ip), 7, 3.5, c.inc); R.rr(RP.M+W*ip, R.y, Math.max(7,W*(1-ip)), 7, 3.5, c.exp); }
+  R.t("Доходы "+(tot?Math.round(ip*100):0)+"%", RP.M, R.y+21, {size:8.5, color:c.inc, weight:600});
+  R.t("Расходы "+(tot?100-Math.round(ip*100):0)+"%", RP.W-RP.M, R.y+21, {size:8.5, color:c.exp, weight:600, align:"right"});
+  R.y+=34;
+  }
+
+  /* график по месяцам */
+  var md=rpMonthsData();
+  if(md.length){
+    R.section("Доходы и расходы по месяцам", null, 190);
+    var lx=RP.W-RP.M; [["Расходы",c.exp],["Доходы",c.inc]].forEach(function(l){ R.font(9,500); var tw=R.x.measureText(l[0]).width; lx-=tw; R.t(l[0], lx, R.y-14, {size:9, color:c.sub, weight:500}); lx-=13; R.rr(lx, R.y-21.5, 8, 8, 2, l[1]); lx-=14; });
+    var ch=150, px0=RP.M+42, pw=W-42, top=R.y+6, base=top+ch;
+    var mx=rpNice(Math.max.apply(null, md.map(function(m){return Math.max(m.inc,m.exp);}).concat([1])));
+    for(var g=0; g<=4; g++){ var gy=base-ch*g/4; R.x.fillStyle=g?c.line:"#C9CDD6"; R.x.fillRect(px0, gy, pw, g?0.5:0.8); R.t(g?rpK(mx*g/4):"0", px0-8, gy+3, {size:8, color:c.faint, align:"right"}); }
+    var gw=pw/md.length, bw=Math.min(22, gw*0.3), years=new Set(md.map(function(m){return m.k.slice(0,4);})).size>1;
+    md.forEach(function(m,i){
+      var cx=px0+gw*i+gw/2, hi=ch*m.inc/mx, he=ch*m.exp/mx, cur=isMonth && i===md.length-1;
+      if(m.inc>0) R.rr(cx-bw-2, base-hi, bw, hi, 3, c.inc);
+      if(m.exp>0) R.rr(cx+2, base-he, bw, he, 3, c.exp);
+      if(md.length<=8){ if(m.inc>0) R.t(rpK(m.inc), cx-bw/2-2, base-hi-4, {size:7.2, color:c.inc, align:"center"}); if(m.exp>0) R.t(rpK(m.exp), cx+bw/2+2, base-he-4, {size:7.2, color:c.exp, align:"center"}); }
+      var mi=+m.k.slice(5,7)-1; R.t(MON_SH[mi]+(years?" "+m.k.slice(2,4):""), cx, base+14, {size:8.5, color:cur?c.text:c.sub, weight:cur?700:400, align:"center"});
+    });
+    R.y=base+28;
+  }
+
+  /* расходы по категориям — полосы */
+  var ce=rpByCat(v.filter(function(t){return t.type==="exp";}));
+  if(ce.arr.length){
+    var rowsC=ce.arr.slice(0,8), rest=ce.arr.slice(8);
+    if(rest.length) rowsC.push({cat:"Остальные ("+rest.length+")", sum:rest.reduce(function(a,b){return a+b.sum;},0), other:true});
+    R.section("Куда ушли деньги", "расходы "+fmt0(ce.total), rowsC.length*22);
+    var nameW=150, amtW=120, barX=RP.M+nameW+14, barW=W-nameW-14-amtW-10;
+    rowsC.forEach(function(r){
+      R.ensure(22);
+      var col=r.other?"#B9BEC9":catDef(r.cat)[1], p=ce.total?r.sum/ce.total:0;
+      R.x.beginPath(); R.x.arc(RP.M+4, R.y+8, 3.6, 0, Math.PI*2); R.x.fillStyle=col; R.x.fill();
+      R.t(r.cat, RP.M+14, R.y+11.5, {size:9.5, maxW:nameW-6});
+      R.rr(barX, R.y+4, barW, 8, 4, c.track); R.rr(barX, R.y+4, Math.max(8,barW*p), 8, 4, col);
+      R.t(fmt0(r.sum), RP.W-RP.M-40, R.y+11.5, {size:9.5, weight:600, align:"right"});
+      R.t(Math.round(p*100)+"%", RP.W-RP.M, R.y+11.5, {size:9, color:c.faint, align:"right"});
+      R.y+=22;
+    });
+    R.y+=6;
+  }
+
+  /* расходы по дням месяца */
+  if(isMonth && v.some(function(t){return t.type==="exp";})){
+    var dim=new Date(now0.getFullYear(),periodIdx+1,0).getDate(), dv=[]; for(var i=0;i<dim;i++) dv.push(0);
+    v.forEach(function(t){ if(t.type==="exp" && t.date) dv[+t.date.slice(8,10)-1]+=t.amount; });
+    var dmax=Math.max.apply(null,dv), davg=exp/dim;
+    R.section("Расходы по дням", "в среднем "+fmt0(davg)+" в день", 130);
+    var dh=95, dx0=RP.M+42, dw=W-42, dtop=R.y+4, dbase=dtop+dh, dm=rpNice(dmax);
+    for(var g2=0; g2<=2; g2++){ var gy2=dbase-dh*g2/2; R.x.fillStyle=g2?c.line:"#C9CDD6"; R.x.fillRect(dx0, gy2, dw, g2?0.5:0.8); R.t(g2?rpK(dm*g2/2):"0", dx0-8, gy2+3, {size:8, color:c.faint, align:"right"}); }
+    var ay=dbase-dh*davg/dm; R.x.save(); R.x.setLineDash([3,3]); R.x.strokeStyle=c.accent; R.x.lineWidth=0.8; R.x.beginPath(); R.x.moveTo(dx0,ay); R.x.lineTo(dx0+dw,ay); R.x.stroke(); R.x.restore();
+    var sw=dw/dim, bww=Math.max(2, sw*0.62), maxI=dv.indexOf(dmax);
+    dv.forEach(function(val,i){ var h=dh*val/dm, cx=dx0+sw*i+sw/2; if(val>0) R.rr(cx-bww/2, dbase-h, bww, h, Math.min(2,bww/2), i===maxI?c.exp:"#F0A3A9");
+      if(i===0 || (i+1)%5===0) R.t(String(i+1), cx, dbase+12, {size:7.8, color:c.faint, align:"center"}); });
+    if(dmax>0){ var mxx=dx0+sw*maxI+sw/2; R.t("макс. "+fmt0(dmax)+" — "+(maxI+1)+" "+MONTHS_GEN[periodIdx], Math.min(Math.max(mxx, dx0+60), dx0+dw-60), dbase-dh*dmax/dm-5, {size:7.8, color:c.exp, weight:600, align:"center"}); }
+    R.y=dbase+24;
+  }
+
+  /* таблицы категорий */
+  function catTable(title, data, colr){
+    if(!data.arr.length) return;
+    R.section(title, null, 60);
+    var rows=data.arr.map(function(r){ return [{t:r.cat, dot:catDef(r.cat)[1]}, String(r.n), {t:fmt(r.sum), c:colr}, (data.total?Math.round(r.sum/data.total*1000)/10:0).toString().replace(".",",")+"%"]; });
+    var nTot=data.arr.reduce(function(a,b){return a+b.n;},0);
+    rows.push(["Итого", String(nTot), {t:fmt(data.total), c:colr}, "100%"]);
+    R.table([{title:"Категория",w:250},{title:"Операций",w:70,align:"right"},{title:"Сумма",w:120,align:"right"},{title:"Доля",w:70,align:"right"}], rows, {total:true});
+  }
+  catTable("Расходы по категориям", ce, c.exp);
+  catTable("Доходы по категориям", rpByCat(v.filter(function(t){return t.type==="inc";})), c.inc);
+
+  /* накопления */
+  if(!flt && savings && savings.length){
+    R.section("Накопления", "итого "+fmt0(savings.reduce(function(a,s){return a+(+s.amount||0);},0)), 60);
+    var srows=savings.slice().sort(function(a,b){return (+b.amount||0)-(+a.amount||0);}).map(function(s){
+      var en=uD(s.end); return [{t:s.name||"Вклад", dot:"#47C99E"}, rateTxt(s.rate), fmt0(+s.amount||0), isNaN(en)?"бессрочно":fmtU(en), {t:savMonthly(s)>0?"+"+fmt0(savMonthly(s)):"—", c:c.inc}]; });
+    R.table([{title:"Вклад / счёт",w:200},{title:"Ставка",w:60,align:"right"},{title:"Сумма",w:110,align:"right"},{title:"Окончание",w:80,align:"right"},{title:"В месяц",w:90,align:"right"}], srows);
+  }
+
+  /* все операции */
+  if(v.length){
+    R.section("Операции", v.length+" "+plural(v.length,["операция","операции","операций"]), 60);
+    var ops=v.slice().sort(function(a,b){ return (a.date||"").localeCompare(b.date||""); }).map(function(t){
+      var p=(t.date||"").split("-"), ds=p.length===3?p[2]+"."+p[1]+"."+p[0].slice(2):"";
+      return [ds, {t:t.category||"Прочее", dot:catDef(t.category, t.type==="inc")[1]}, {t:t.note||"", c:RP.c.sub}, {t:(t.type==="inc"?"+":"−")+fmt(t.amount), c:t.type==="inc"?c.inc:c.exp, b:true}];
+    });
+    R.table([{title:"Дата",w:62},{title:"Категория",w:170},{title:"Комментарий",w:170},{title:"Сумма",w:110,align:"right"}], ops);
+  } else {
+    R.ensure(60); R.rr(RP.M, R.y, W, 54, 10, c.card); R.t("За этот период операций нет", RP.W/2, R.y+31, {size:11, color:c.sub, align:"center"}); R.y+=66;
+  }
+
+  R.finish(stamp);
+  return R.pages;
+}
+
+/* сборка PDF из страниц-картинок */
+function rpJpeg(cv){
+  return new Promise(function(res){
+    try{ cv.toBlob(function(b){ if(b) b.arrayBuffer().then(function(ab){ res(new Uint8Array(ab)); }); else res(rpDataUrl(cv)); }, "image/jpeg", 0.9); }
+    catch(e){ res(rpDataUrl(cv)); }
+  });
+}
+function rpDataUrl(cv){ var s=atob(cv.toDataURL("image/jpeg",0.9).split(",")[1]), u=new Uint8Array(s.length); for(var i=0;i<s.length;i++) u[i]=s.charCodeAt(i); return u; }
+function rpUtf16Hex(s){ var h="FEFF"; for(var i=0;i<s.length;i++) h+=s.charCodeAt(i).toString(16).toUpperCase().padStart(4,"0"); return "<"+h+">"; }
+function pagesToPdf(pages, title){
+  return Promise.all(pages.map(rpJpeg)).then(function(imgs){
+    var parts=[], pos=0, offs=[];
+    function add(x){ var u; if(typeof x==="string"){ u=new Uint8Array(x.length); for(var i=0;i<x.length;i++) u[i]=x.charCodeAt(i)&255; } else u=x; parts.push(u); pos+=u.length; }
+    var n=pages.length, W=RP.W, H=RP.H, objCount=3+n*3;
+    add("%PDF-1.4\n"); add(new Uint8Array([37,226,227,207,211,10]));
+    function obj(id, body, stream){ offs[id]=pos; add(id+" 0 obj\n"); add(body); if(stream){ add("\nstream\n"); add(stream); add("\nendstream"); } add("\nendobj\n"); }
+    var kids=[]; for(var i=0;i<n;i++) kids.push((4+i*3)+" 0 R");
+    obj(1, "<< /Type /Catalog /Pages 2 0 R >>");
+    obj(2, "<< /Type /Pages /Kids ["+kids.join(" ")+"] /Count "+n+" >>");
+    obj(3, "<< /Title "+rpUtf16Hex(title)+" /Producer "+rpUtf16Hex("Мой бюджет")+" >>");
+    imgs.forEach(function(img,i){
+      var pid=4+i*3, cid=pid+1, iid=pid+2, cs="q "+W+" 0 0 "+H+" 0 0 cm /Im0 Do Q";
+      obj(pid, "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 "+W+" "+H+"] /Resources << /XObject << /Im0 "+iid+" 0 R >> >> /Contents "+cid+" 0 R >>");
+      obj(cid, "<< /Length "+cs.length+" >>", cs);
+      obj(iid, "<< /Type /XObject /Subtype /Image /Width "+pages[i].width+" /Height "+pages[i].height+" /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length "+img.length+" >>", img);
+    });
+    var xref=pos, x="xref\n0 "+(objCount+1)+"\n0000000000 65535 f \n";
+    for(var k=1;k<=objCount;k++) x+=String(offs[k]).padStart(10,"0")+" 00000 n \n";
+    add(x); add("trailer\n<< /Size "+(objCount+1)+" /Root 1 0 R /Info 3 0 R >>\nstartxref\n"+xref+"\n%%EOF\n");
+    var out=new Uint8Array(pos), o=0; parts.forEach(function(p){ out.set(p,o); o+=p.length; }); return out;
+  });
+}
+function reportFileName(){ return "budget-report-"+(periodIdx===-1?"all":now0.getFullYear()+"-"+String(periodIdx+1).padStart(2,"0"))+(rpActive()?"-selected":"")+".pdf"; }
+function makeReportPdf(){ var pages=buildReport(); return pagesToPdf(pages, "Отчёт о бюджете — "+rpPeriodLabel()); }
+var pendingPdf=null;
+function pdfBtnLabel(){ var b=document.getElementById("pdfBtn"); if(b && !b.disabled && !pendingPdf){ var n=rpActive()?rpChosen().length:0; b.textContent=rpNone()?"Выбери хотя бы одну категорию":"PDF-отчёт · "+rpPeriodLabel()+(n?" · "+n+" "+plural(n,["категория","категории","категорий"]):""); } }
+document.getElementById("shareBtn").addEventListener("click", function(){ pendingPdf=null; pdfBtnLabel(); });
+document.getElementById("pdfBtn").onclick=function(){
+  var b=this;
+  if(pendingPdf){ var p=pendingPdf; pendingPdf=null; deliverPdf(p.name, p.bytes); pdfBtnLabel(); return; }
+  if(rpNone()){ toast("Выбери хотя бы одну категорию"); var r=document.getElementById("rpCatRow"); r.classList.add("open"); document.getElementById("rpCatPick").classList.add("open"); return; }
+  b.disabled=true; b.textContent="Готовлю отчёт…";
+  setTimeout(function(){
+    makeReportPdf().then(function(bytes){
+      b.disabled=false;
+      if(PDF_TWO_STEP){ pendingPdf={name:reportFileName(), bytes:bytes}; b.textContent="Отчёт готов — нажми, чтобы сохранить"; return; }
+      return deliverPdf(reportFileName(), bytes).then(pdfBtnLabel);
+    }).catch(function(){ b.disabled=false; pdfBtnLabel(); toast("Не удалось сформировать отчёт"); });
+  }, 30);
+};
+
+
+/* ===== выбор категорий для PDF-отчёта ===== */
+var rpSel=null; // null — все категории; иначе {"exp|Кафе, рестораны":true,...}
+try{ var _rps=localStorage.getItem("budget_rpcats_v1"); if(_rps) rpSel=JSON.parse(_rps)||null; }catch(e){ rpSel=null; }
+function rpKey(t){ return (t.type==="inc"?"inc":"exp")+"|"+(t.category||"Прочее"); }
+function rpFilter(t){ return !rpActive() || !!rpSel[rpKey(t)]; }
+function rpStore(){ try{ if(rpSel) localStorage.setItem("budget_rpcats_v1", JSON.stringify(rpSel)); else localStorage.removeItem("budget_rpcats_v1"); }catch(e){} }
+function rpAvail(){
+  var by={}, arr=[];
+  periodTx().forEach(function(t){ var k=rpKey(t); if(!by[k]){ by[k]={k:k, type:t.type==="inc"?"inc":"exp", cat:t.category||"Прочее", sum:0, n:0}; arr.push(by[k]); } by[k].sum+=t.amount; by[k].n++; });
+  arr.sort(function(a,b){ return b.sum-a.sum; }); return arr;
+}
+function rpChosen(av){ av=av||rpAvail(); return av.filter(function(o){ return !rpSel || !!rpSel[o.k]; }); }
+function rpActive(){ if(!rpSel) return false; var av=rpAvail(); return rpChosen(av).length<av.length; }
+function rpNone(){ var av=rpAvail(); return av.length>0 && rpChosen(av).length===0; }
+function rpNames(){ return rpChosen().map(function(o){ return o.cat; }).join(", "); }
+function rpSummary(){
+  var av=rpAvail(), ch=rpChosen(av);
+  if(!av.length || ch.length===av.length) return "все · "+(av.length?av.length+" "+plural(av.length,["категория","категории","категорий"]):"нет операций за период");
+  if(!ch.length) return "ничего не выбрано";
+  if(ch.length<=2) return ch.map(function(o){ return o.cat; }).join(", ");
+  return "выбрано "+ch.length+" из "+av.length;
+}
+function rpRender(){
+  var av=rpAvail(), list=document.getElementById("rpCatList");
+  document.getElementById("rpCatSum").textContent=rpSummary();
+  if(!av.length){ list.innerHTML='<div class="rpempty">За этот период операций нет</div>'; }
+  else {
+    var html="";
+    [["exp","Расходы"],["inc","Доходы"]].forEach(function(g){
+      var items=av.filter(function(o){ return o.type===g[0]; }); if(!items.length) return;
+      html+='<div class="rph">'+g[1]+'</div><div class="rpchips">'+items.map(function(o){
+        var on=!rpSel || !!rpSel[o.k];
+        return '<button class="rpchip'+(on?' on':'')+'" data-k="'+esc(o.k)+'"><i style="background:'+catDef(o.cat, o.type==="inc")[1]+'"></i>'+esc(o.cat)+' <small class="num">'+fmt0(o.sum)+'</small></button>';
+      }).join("")+'</div>';
+    });
+    list.innerHTML=html;
+    list.querySelectorAll(".rpchip").forEach(function(b){ b.onclick=function(){ rpToggle(b.getAttribute("data-k")); }; });
+  }
+  pendingPdf=null; pdfBtnLabel();
+}
+function rpSet(sel){
+  var av=rpAvail();
+  if(sel && av.length && av.every(function(o){ return sel[o.k]; })) sel=null;
+  rpSel=sel; rpStore(); rpRender();
+}
+function rpToggle(k){
+  var av=rpAvail(), s={};
+  av.forEach(function(o){ if(!rpSel || rpSel[o.k]) s[o.k]=true; });
+  if(s[k]) delete s[k]; else s[k]=true;
+  rpSet(s);
+}
+document.querySelectorAll("#rpCatPick .rpq button").forEach(function(b){ b.onclick=function(){
+  var q=b.dataset.q, av=rpAvail(), s={};
+  if(q==="all"){ rpSet(null); return; }
+  if(q!=="none") av.forEach(function(o){ if(o.type===q) s[o.k]=true; });
+  rpSet(s);
+}; });
+document.getElementById("rpCatRow").onclick=function(){ this.classList.toggle("open"); document.getElementById("rpCatPick").classList.toggle("open"); };
+document.getElementById("shareBtn").addEventListener("click", function(){
+  document.getElementById("rpCatRow").classList.remove("open"); document.getElementById("rpCatPick").classList.remove("open"); rpRender();
+});
 
 load(); applyPendingImport();
 setAddType("exp"); fillCats(document.getElementById("rCat"), EXP_CATS);

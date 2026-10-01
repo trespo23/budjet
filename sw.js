@@ -1,5 +1,5 @@
 /* Офлайн-кэш «Мой бюджет». При обновлении файлов увеличь номер версии. */
-const CACHE = 'budget-v9';
+const CACHE = 'budget-v11';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon-180.png', './icon-192.png', './icon-512.png', './icon-maskable-512.png'];
 
 self.addEventListener('install', (e) => {
