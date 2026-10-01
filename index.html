@@ -385,6 +385,15 @@ html.lk .lock{display:flex;}
 .rpchip small{color:var(--sub);font-size:12px;}
 .rpempty{font-size:13.5px;color:var(--sub);padding:8px 2px;}
 #budgetCard{display:none !important;}
+.langbtn{position:relative;}
+.langbtn b{position:absolute;right:3px;bottom:5px;font-size:9.5px;font-weight:700;letter-spacing:.02em;line-height:1;padding:2px 3px;border-radius:5px;background:var(--accent);color:#fff;}
+.langbtn svg.i{width:23px;height:23px;}
+.tt button.active.lg{background:rgba(124,108,242,.22);color:var(--text);}
+.curgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.curgrid button{font-family:inherit;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;border-radius:13px;border:1px solid var(--stroke);background:var(--elevated);color:var(--text);cursor:pointer;}
+.curgrid button span{font-size:19px;font-weight:600;line-height:1.2;}
+.curgrid button small{font-size:11.5px;color:var(--sub);letter-spacing:.04em;}
+.curgrid button.on{border-color:#8F80FF;background:rgba(124,108,242,.18);}
 </style>
 <script>try{if(localStorage.getItem("budget_lock_v1"))document.documentElement.classList.add("lk");}catch(e){}</script>
 </head>
@@ -648,6 +657,273 @@ html.lk .lock{display:flex;}
   </div>
 </div>
 
+<script>
+/* ===== язык интерфейса: RU / EN ===== */
+var LANG="ru"; try{ LANG=localStorage.getItem("budget_lang_v1")==="en"?"en":"ru"; }catch(e){}
+var CUR="₽"; try{ CUR=localStorage.getItem("budget_cur_v1")||"₽"; }catch(e){}
+var CURS=[["₽","RUB"],["$","USD"],["€","EUR"],["£","GBP"],["¥","CNY"],["₸","KZT"],["Br","BYN"],["₺","TRY"],["₾","GEL"],["֏","AMD"],["₴","UAH"],["AED","AED"]];
+var I18N=(function(){
+  var PREFIX={"$":1,"£":1,"¥":1};
+  function act(){ return LANG==="en" || CUR!=="₽"; }
+  function money(s){
+    if(CUR==="₽" || s.indexOf("₽")<0) return s;
+    var pre=PREFIX[CUR];
+    s=s.replace(/(\d+(?:[\s\u00a0\u202f]\d{3})*)(?:,(\d{1,2}))?[\s\u00a0\u202f]?₽/g, function(_,a,d){ return pre ? CUR+a.replace(/[\s\u00a0\u202f]/g,",")+(d?"."+d:"") : a+(d?","+d:"")+" "+CUR; });
+    return s.replace(/₽/g,CUR);
+  }
+  var MN=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var MS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var mNom={}, mGen={}, mPrep={}, mSh={};
+  ["январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь"].forEach(function(k,i){ mNom[k]=i; });
+  ["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"].forEach(function(k,i){ mGen[k]=i; });
+  ["январе","феврале","марте","апреле","мае","июне","июле","августе","сентябре","октябре","ноябре","декабре"].forEach(function(k,i){ mPrep[k]=i; });
+  ["янв","фев","мар","апр","май","июн","июл","авг","сен","окт","ноя","дек"].forEach(function(k,i){ mSh[k]=i; });
+  var WDAY={"вс":"Sun","пн":"Mon","вт":"Tue","ср":"Wed","чт":"Thu","пт":"Fri","сб":"Sat"};
+  function pl(n,w,ws){ n=+n; return n+" "+(n===1?w:(ws||w+"s")); }
+  function ord(n){ n=+n; var s=["th","st","nd","rd"], v=n%100; return n+(s[(v-20)%10]||s[v]||s[0]); }
+  function per(p){ if(p==="за всё время") return "all time"; var m=p.replace(/^за /,""); return mNom[m]!==undefined ? "in "+MN[mNom[m]] : p; }
+  var CATS={
+   "Автомобиль":"Car","Продукты питания":"Groceries","Развлечения и подарки":"Fun & gifts","Здоровье":"Health","Шоппинг":"Shopping","ЖКУ":"Utilities",
+   "Кредит/долги":"Loans & debts","Поездки (транспорт, такси)":"Transport & taxi","Путешествия":"Travel","Учеба":"Education","Связь (телефон, интернет)":"Phone & internet",
+   "Налоги":"Taxes","Строительные материалы ремонт":"Home repairs","Кафе, рестораны":"Cafes & restaurants","Спорт":"Sport","Прочее":"Other","Обмен на валюту":"Currency exchange",
+   "Зарплата":"Salary","Подработка":"Side job","Процент с вклада":"Deposit interest","Премия":"Bonus","Налоговый вычет":"Tax refund","Аренда жилья":"Rental income","Разное":"Misc"
+  };
+  var D={
+   "Мой бюджет":"My Budget","Язык и валюта":"Language & currency","Язык":"Language","Валюта":"Currency","Меняется только знак валюты — суммы не пересчитываются.":"Only the currency sign changes — amounts are not converted.","Мой бюджет — демо":"My Budget — demo","демо":"demo",
+   "Введите ПИН-код":"Enter PIN","Введите пароль":"Enter password","Введите текущий ПИН-код":"Enter current PIN","Введите текущий пароль":"Enter current password",
+   "Войти по Face ID":"Sign in with Face ID","Забыли код?":"Forgot code?","Отмена":"Cancel","За всё время":"All time","Баланс за месяц":"Balance this month",
+   "Доходы":"Income","Расходы":"Expenses","Быстро добавить":"Quick add","Остаток на месяц":"Left this month","При текущих расходах":"At current spending",
+   "Бюджет месяца":"Monthly budget","Лимит на месяц не задан":"No monthly limit set","Установить лимит":"Set limit","Последние операции":"Recent transactions",
+   "Все":"All","Все операции":"All","Операции":"Transactions","По категориям":"By category","По дням":"By day","Накопления":"Savings",
+   "Предстоящие платежи":"Upcoming payments","Всё":"Home","Платежи":"Bills","Новая операция":"New transaction","Расход":"Expense","Доход":"Income",
+   "Сохранить":"Save","Лимит на месяц":"Monthly limit","Убрать лимит":"Remove limit",
+   "Лимит — сколько ты планируешь потратить за месяц. От него считается остаток и процент бюджета.":"The limit is how much you plan to spend per month. The remaining amount and budget percentage are calculated from it.",
+   "Ежемесячный платёж":"Monthly payment","Добавить":"Add","Новый вклад":"New deposit","Название":"Name","Сумма, ₽":"Amount, ₽","Ставка, % годовых":"Rate, % per year",
+   "Открыт":"Opened","Заканчивается":"Ends","Капитализация процентов":"Compound interest","проценты каждый месяц прибавляются к сумме":"interest is added to the balance every month",
+   "Комментарий":"Note","Доход по месяцам":"Interest by month","Удалить вклад":"Delete deposit","Защита входа":"App lock","Категория":"Category",
+   "Новая категория расходов":"New expense category","Новая категория доходов":"New income category","Создать категорию":"Create category",
+   "Вернуть стандартную иконку":"Restore default icon","Дата":"Date","Удалить":"Delete","Расходы по категориям":"Expenses by category","Доходы по категориям":"Income by category",
+   "Период":"Period","Готово":"Done","Экспорт данных":"Export data","Данные":"Data","Категории в отчёте":"Categories in report","все":"all",
+   "Только расходы":"Expenses only","Только доходы":"Income only","Снять все":"Clear all","PDF-отчёт":"PDF report","Скачать CSV":"Download CSV",
+   "В Google Таблицах: Файл → Импорт → Загрузка → выбери файл. Все операции придут колонками «Дата, Тип, Категория, Сумма, Комментарий».":"In Google Sheets: File → Import → Upload → pick the file. Transactions come as columns “Date, Type, Category, Amount, Note”.",
+   "Резервная копия (для офлайн-версии)":"Backup (for the offline version)",
+   "Полная копия: операции, платежи и лимит. Её можно загрузить в офлайн-приложение через «Импорт».":"Full copy: transactions, bills and limit. You can load it into the offline app via “Import”.",
+   "Пароль":"Password","Войти":"Sign in","Стереть":"Delete","Защита":"Lock","Экспорт":"Export","Выбрать период":"Choose period","Предыдущий месяц":"Previous month","Следующий месяц":"Next month",
+   "Например: 500 на такси":"E.g. 500 taxi","Поиск":"Search","Сумма, категория или комментарий":"Amount, category or note","Поиск по категории или комментарию":"Search by category or note","Очистить":"Clear",
+   "Добавить вклад":"Add deposit","Добавить платёж":"Add payment","Например 150 000":"E.g. 150 000","Число (1–31)":"Day (1–31)","Комментарий, например «Ипотека»":"Note, e.g. “Mortgage”",
+   "Например: вклад в Сбере, накопительный счёт":"E.g. bank deposit, savings account","Без срока":"No end date","Банк, условия, на что копим":"Bank, terms, what you're saving for",
+   "Название, например «Питомец»":"Name, e.g. “Pet”","Например: Вкусвилл, подарок маме":"E.g. supermarket, gift for mom","Итоги":"Summary","цвет":"color",
+   "Без даты":"No date","Без категории":"No category","Баланс за всё время":"All-time balance","Итоговый баланс":"Total balance","Доходы равны расходам":"Income equals expenses",
+   "Операций за период нет":"No transactions in this period","Можно потратить до конца месяца":"Available until the end of the month","Лимит превышен":"Limit exceeded",
+   "С учётом остатка прошлых месяцев":"Including carry-over from previous months","Доходы минус расходы за месяц":"Income minus expenses this month","Доходы минус расходы":"Income minus expenses",
+   "нажми, чтобы задать лимит":"tap to set a limit","Сегодня":"Today","Завтра":"Tomorrow","доходы ↑":"income ↑","расходы ↓":"expenses ↓","доходы":"income","расходы":"expenses",
+   "Пик трат за день":"Peak day","Дней без трат":"No-spend days","остаток за месяц":"monthly surplus","перерасход":"overspend","нет доходов":"no income","от доходов":"of income",
+   "Расход в месяц":"Spend per month","Лучший месяц":"Best month","Худший месяц":"Worst month","Перерасход":"Overspent","Отложено":"Saved","расходы больше доходов":"expenses exceed income",
+   "Расход в день":"Spend per day","в среднем":"average","Операций":"Transactions","В день":"Per day","Ничего не найдено":"Nothing found",
+   "Ипотека, связь, подписки — всё, что списывается каждый месяц":"Mortgage, phone, subscriptions — everything charged monthly","Удалить операцию":"Delete transaction",
+   "Каждый месяц":"Every month","Следующий платёж":"Next payment","Удалить платёж":"Delete payment","Нет данных за период":"No data for this period",
+   "Не нашёл сумму — например: 500 такси":"No amount found — e.g. 500 taxi","Разбираю…":"Parsing…","Тип":"Type","Сумма":"Amount",
+   "Скачивание недоступно в этом окне — открой приложение по ссылке в браузере.":"Download isn't available in this window — open the app by its link in a browser.",
+   "Скачивание недоступно в этом окне — открой приложение по ссылке в браузере":"Download isn't available in this window — open the app by its link in a browser",
+   "бессрочно":"no end date","Здесь будут твои вклады и накопительные счета":"Your deposits and savings accounts will appear here","Вклад":"Deposit","В месяц":"Per month",
+   "За 12 месяцев":"Over 12 months","За весь срок":"Whole term","Через год":"In a year","К концу срока":"At maturity",
+   "Доход по месяцам (ближайшие 12, срок не указан)":"Interest by month (next 12, no end date)","Удалить этот вклад?":"Delete this deposit?","доход":"income","расход":"expense",
+   "Иконка категории":"Category icon","своя":"custom","нажми, чтобы сменить":"tap to change","Введи название":"Enter a name","Такая категория уже есть":"This category already exists",
+   "Категория удалена":"Category deleted","Своя категория":"Custom","Итог месяца":"Month result","Итог за период":"Period result","доходы − расходы":"income − expenses",
+   "В среднем в день":"Average per day","по выбранным категориям":"selected categories","Доля от всех доходов":"Share of all income","Доля от всех расходов":"Share of all expenses",
+   "Доходы и расходы по месяцам":"Income and expenses by month","Куда ушли деньги":"Where the money went","Расходы по дням":"Expenses by day","Итого":"Total","Доля":"Share",
+   "Вклад / счёт":"Deposit / account","Ставка":"Rate","Окончание":"End date","За этот период операций нет":"No transactions in this period","Отчёт о бюджете":"Budget report","Отчёт":"Report",
+   "Выбери хотя бы одну категорию":"Select at least one category","Готовлю отчёт…":"Preparing report…","Отчёт готов — нажми, чтобы сохранить":"Report ready — tap to save",
+   "Не удалось сформировать отчёт":"Couldn't generate the report","нет операций за период":"no transactions in this period","ничего не выбрано":"nothing selected",
+   "Сбросить защиту? Копия данных на этом устройстве будет удалена и заново загрузится из онлайн-хранилища.":"Reset the lock? The copy of data on this device will be deleted and reloaded from online storage.",
+   "Сбросить защиту? Все данные на этом телефоне будут удалены. Вернуть их можно из резервной копии.":"Reset the lock? All data on this phone will be deleted. You can restore it from a backup.",
+   "Сбросить защиту в демо?":"Reset the lock in the demo?",
+   "Недоступно здесь — Face ID работает в офлайн-версии на iPhone":"Not available here — Face ID works in the offline version on iPhone",
+   "В демо Face ID недоступен — работает в офлайн-версии на iPhone":"Face ID isn't available in the demo — it works in the offline version on iPhone",
+   "Недоступно на этом устройстве":"Not available on this device",
+   "Придумайте ПИН-код":"Create a PIN","Придумайте пароль":"Create a password","4 цифры":"4 digits","Не короче 4 символов":"At least 4 characters",
+   "Забыли ПИН-код?":"Forgot PIN?","Забыли пароль?":"Forgot password?","Минимум 4 символа":"At least 4 characters","Повторите ПИН-код":"Repeat PIN","Повторите пароль":"Repeat password",
+   "Не совпало — попробуйте ещё раз":"Didn't match — try again","ПИН-код установлен":"PIN set","Пароль установлен":"Password set","Неверный ПИН-код":"Wrong PIN","Неверный пароль":"Wrong password",
+   "Face ID не сработал — введите ПИН-код":"Face ID failed — enter your PIN","Face ID не сработал — введите пароль":"Face ID failed — enter your password",
+   "Защита сброшена":"Lock reset","Защита включена":"Lock is on","Защита выключена":"Lock is off","Приложение открывается без кода":"The app opens without a code",
+   "Установить ПИН-код (4 цифры)":"Set a PIN (4 digits)","Установить пароль":"Set a password",
+   "Код хранится только на этом устройстве в зашифрованном виде. Face ID можно включить после установки кода.":"The code is stored only on this device, encrypted. Face ID can be enabled after you set a code.",
+   "Вход по Face ID":"Sign in with Face ID","быстрый вход без кода":"quick sign-in without a code","Изменить ПИН-код":"Change PIN","Изменить пароль":"Change password",
+   "Перейти на пароль":"Switch to password","Перейти на ПИН-код":"Switch to PIN","Заблокировать сейчас":"Lock now","Выключить защиту":"Turn off lock",
+   "Face ID выключен":"Face ID off","Face ID включён":"Face ID on","Закрыть":"Close","Пока нет операций":"No transactions yet","+ Добавить платёж":"+ Add payment",
+   "+ Добавить вклад или счёт":"+ Add deposit or account","Перенесено с прошлых месяцев:":"Carried over from previous months:","Минус с прошлых месяцев:":"Deficit from previous months:",
+   "Найдено":"Found","Начните вводить — подскажу варианты из истории":"Start typing — I'll suggest matches from history",
+   "Скачать CSV для Google Таблиц":"Download CSV for Google Sheets","Сохранить резервную копию":"Save backup","Загрузить из файла…":"Load from file…","Загрузить резервную копию":"Load backup",
+   "Данные хранятся только на этом телефоне и работают без интернета. Раз в месяц сохраняй резервную копию — например, в «Файлы» → iCloud Drive. Загрузка принимает резервную копию (.json) целиком или CSV (операции добавятся к текущим).":"Data is stored only on this phone and works offline. Save a backup once a month — e.g. to Files → iCloud Drive. Loading accepts a full backup (.json) or a CSV (transactions are added to the current ones).",
+   "Перенеси свои данные":"Bring your data over",
+   "В старой версии в Claude нажми значок «Поделиться» вверху → «Резервная копия (для офлайн-версии)», затем загрузи файл сюда.":"In the old version in Claude tap the Share icon at the top → “Backup (for the offline version)”, then load the file here.",
+   "В файле не нашлось операций":"No transactions found in the file","Не получилось прочитать файл":"Couldn't read the file",
+   "Продукты":"Groceries","Кредит":"Loans","Поездки":"Transport","Связь":"Phone","Строительные":"Repairs","Кафе":"Cafes","Развлечения":"Fun","Процент":"Interest","Налоговый":"Tax refund","Аренда":"Rent","Обмен":"FX",
+   "аванс":"advance","проект":"project","кэшбэк":"cashback","фитнес":"gym","мобильная связь":"mobile plan","квартплата":"rent & utilities","ипотека":"mortgage","кофе":"coffee","обед":"lunch","ужин":"dinner",
+   "такси":"taxi","метро":"metro","АЗС":"gas station","мойка":"car wash","парковка":"parking","одежда":"clothes","аптека":"pharmacy","стоматолог":"dentist","кино":"cinema","подарок":"gift","концерт":"concert",
+   "Ипотека":"Mortgage","Фитнес":"Gym","Мобильная связь":"Mobile plan","Подписка на музыку":"Music subscription","Вклад «Максимальный»":"“Maximum” deposit","Проценты каждый месяц на карту":"Interest paid to card monthly",
+   "Накопительный счёт":"Savings account","Подушка безопасности":"Emergency fund","Вклад на отпуск":"Vacation deposit","Поездка весной":"Spring trip"
+  };
+  Object.keys(CATS).forEach(function(k){ D[k]=CATS[k]; });
+  Object.keys(WDAY).forEach(function(k){ D[k]=WDAY[k]; });
+  Object.keys(mSh).forEach(function(k){ D[k]=MS[mSh[k]]; });
+  Object.keys(mGen).forEach(function(k){ D[k]=MN[mGen[k]]; });
+  D["операция"]="transaction"; D["операции"]="transactions"; D["операций"]="transactions";
+  var REV={}; Object.keys(CATS).forEach(function(k){ REV[CATS[k].toLowerCase()]=k; });
+  var MRX="[а-яё]+";
+  var R=[
+   [/^([А-ЯЁ][а-яё]+) (\d{4})$/, function(m){ var i=mNom[m[1].toLowerCase()]; return i===undefined?null:MN[i]+" "+m[2]; }],
+   [/^([а-яё]{3}) (\d{2,4})$/, function(m){ var i=mSh[m[1]]; return i===undefined?null:MS[i]+" "+m[2]; }],
+   [/^([а-яё]+) (\d{4})$/, function(m){ var i=mNom[m[1]]; return i===undefined?null:MN[i]+" "+m[2]; }],
+   [/^(\d+) ([а-яё]+), (вс|пн|вт|ср|чт|пт|сб)$/, function(m){ var i=mGen[m[2]]; return i===undefined?null:MN[i]+" "+m[1]+", "+WDAY[m[3]]; }],
+   [/^(\d+) ([а-яё]+)$/, function(m){ var i=mGen[m[2]]; return i===undefined?null:MN[i]+" "+m[1]; }],
+   [/^(\d+) операци[яий]( (за .+))?$/, function(m){ return pl(m[1],"transaction")+(m[3]?" "+per(m[3]):""); }],
+   [/^операци[яий] по всей истории( ·)?$/, function(m){ return "in all history"+(m[1]||""); }],
+   [/^(\d+) (категория|категории|категорий)$/, function(m){ return pl(m[1],"category","categories"); }],
+   [/^(\d+) (вклад|вклада|вкладов)$/, function(m){ return pl(m[1],"deposit"); }],
+   [/^(\d+) (платёж|платежа|платежей)$/, function(m){ return pl(m[1],"payment"); }],
+   [/^(\d+) (день|дня|дней)$/, function(m){ return pl(m[1],"day"); }],
+   [/^осталось (\d+) (месяц|месяца|месяцев)$/, function(m){ return pl(m[1],"month")+" left"; }],
+   [/^осталось (\d+) (день|дня|дней)$/, function(m){ return pl(m[1],"day")+" left"; }],
+   [/^осталось (за .+)$/, function(m){ return "left "+per(m[1]); }],
+   [/^осталось попыток: (\d+)$/, function(m){ return "attempts left: "+m[1]; }],
+   [/^в среднем за (\d+) (месяц|месяца|месяцев)$/, function(m){ return "average over "+pl(m[1],"month"); }],
+   [/^в среднем (.+) в день$/, function(m){ return "average "+m[1]+" per day"; }],
+   [/^([↑↓]) на (.+?) (лучше|хуже|меньше|больше), чем в ([а-яё]+)$/, function(m){ var w={"лучше":"better","хуже":"worse","меньше":"less","больше":"more"}[m[3]], i=mPrep[m[4]]; return m[1]+" "+m[2]+" "+w+" than in "+(i===undefined?m[4]:MN[i]); }],
+   [/^как в ([а-яё]+)$/, function(m){ var i=mPrep[m[1]]; return "same as in "+(i===undefined?m[1]:MN[i]); }],
+   [/^(Расходы|Доходы) (за .+) — (.+)$/, function(m){ return (m[1]==="Расходы"?"Expenses ":"Income ")+per(m[2])+" — "+m[3]; }],
+   [/^(Расходы|Доходы) (\d+%)$/, function(m){ return (m[1]==="Расходы"?"Expenses ":"Income ")+m[2]; }],
+   [/^из (.+)$/, function(m){ return "of "+m[1]; }],
+   [/^Через (\d+) (день|дня|дней)$/, function(m){ return "In "+pl(m[1],"day"); }],
+   [/^(\d+) числа$/, function(m){ return "on the "+ord(m[1]); }],
+   [/^потрачено (.+)$/, function(m){ return "spent "+m[1]; }],
+   [/^(.+) в месяц$/, function(m){ return m[1]+" per month"; }],
+   [/^(.+) в год$/, function(m){ return m[1]+" per year"; }],
+   [/^(.+)\/мес$/, function(m){ return m[1]+"/mo"; }],
+   [/^до (\d\d\.\d\d\.\d{4})$/, function(m){ return "until "+m[1]; }],
+   [/^откроется (.+)$/, function(m){ return "opens "+m[1]; }],
+   [/^срок истёк (.+)$/, function(m){ return "matured "+m[1]; }],
+   [/^меняется для всех операций «(.+)»$/, function(m){ return "applies to all “"+tr(m[1])+"” transactions"; }],
+   [/^(За месяц )?(расходы|доходы) превышают (доходы|расходы) на (.+)$/i, function(m){ var e=m[2].toLowerCase()==="расходы"; return (m[1]?"This month ":"")+(m[1]?(e?"expenses":"income"):(e?"Expenses":"Income"))+" exceed"+(e?"":"s")+" "+(e?"income":"expenses")+" by "+m[4]; }],
+   [/^Слишком много попыток\. Подождите (\d+) с$/, function(m){ return "Too many attempts. Wait "+m[1]+" s"; }],
+   [/^Вход по (ПИН-коду|паролю)( или Face ID)?\. Блокировка через минуту в фоне$/, function(m){ return "Sign in with "+(m[1]==="паролю"?"password":"PIN")+(m[2]?" or Face ID":"")+". Locks after a minute in the background"; }],
+   [/^Не удалось включить: (.*)$/, function(m){ return "Couldn't enable: not available here"; }],
+   [/^Категория «(.+)» создана$/, function(m){ return "Category “"+m[1]+"” created"; }],
+   [/^Удалить категорию «(.+)»\? Её операции перейдут в «(.+)»\.$/, function(m){ return "Delete category “"+m[1]+"”? Its transactions will move to “"+tr(m[2])+"”."; }],
+   [/^Удалить категорию «(.+)»$/, function(m){ return "Delete category “"+m[1]+"”"; }],
+   [/^Добавлено операций: (\d+)$/, function(m){ return "Transactions added: "+m[1]; }],
+   [/^Добавлено: (\d+)$/, function(m){ return "Added: "+m[1]; }],
+   [/^Загружено операций: (\d+)$/, function(m){ return "Transactions loaded: "+m[1]; }],
+   [/^Заменить текущие данные \((\d+) операций\) резервной копией \((\d+)\)\?$/, function(m){ return "Replace current data ("+m[1]+" transactions) with the backup ("+m[2]+")?"; }],
+   [/^Добавить (\d+) операций из CSV к текущим\?$/, function(m){ return "Add "+m[1]+" transactions from the CSV to the current ones?"; }],
+   [/^выбрано (\d+) из (\d+)$/, function(m){ return m[1]+" of "+m[2]+" selected"; }],
+   [/^([+−-]?[\d.,]+)(к|м)$/, function(m){ return m[1]+(m[2]==="к"?"k":"M"); }],
+   [/^(.+) тыс$/, function(m){ return m[1]+"k"; }],
+   [/^(.+) млн$/, function(m){ return m[1].replace(",",".")+"M"; }],
+   [/^Сформировано (.+)$/, function(m){ return "Generated "+m[1]; }],
+   [/^Стр\. (\d+) из (\d+)$/, function(m){ return "Page "+m[1]+" of "+m[2]; }],
+   [/^Категории: (.+)$/, function(m){ return "Categories: "+m[1]; }],
+   [/^с переносом (.+)$/, function(m){ return "incl. carry-over "+m[1]; }],
+   [/^итого (.+)$/, function(m){ return "total "+m[1]; }],
+   [/^расходы (.+)$/, function(m){ return "expenses "+m[1]; }],
+   [/^Остальные \((\d+)\)$/, function(m){ return "Other ("+m[1]+")"; }],
+   [/^Выбранные категории (.+)$/, function(m){ return "Selected categories "+m[1]; }],
+   [/^остальные (.+)$/, function(m){ return "others "+m[1]; }],
+   [/^макс\. (.+) — (\d+) ([а-яё]+)$/, function(m){ var i=mGen[m[3]]; return "max "+m[1]+" — "+(i===undefined?m[2]+" "+m[3]:MN[i]+" "+m[2]); }],
+   [/^Отчёт о бюджете — (.+)$/, function(m){ return "Budget report — "+tr(m[1]); }],
+   [/^✓ (.+)$/, function(m){ return "✓ "+tr(m[1]); }]
+  ];
+  var CYR=/[А-Яа-яЁё]/;
+  function core(s){
+    if(D.hasOwnProperty(s)) return D[s];
+    var seps=[" · "," • "];
+    for(var k=0;k<seps.length;k++){ if(s.indexOf(seps[k])>=0){ return s.split(seps[k]).map(function(p){ return CYR.test(p)?core(p):p; }).join(seps[k]); } }
+    for(var i=0;i<R.length;i++){ var m=R[i][0].exec(s); if(m){ var r=R[i][1](m); if(r!=null) return r; } }
+    return s;
+  }
+  function tr(s){
+    if(s==null) return s;
+    s=String(s); var en=LANG==="en" && CYR.test(s);
+    if(!en && !(CUR!=="₽" && s.indexOf("₽")>=0)) return s;
+    var m=/^(\s*)([\s\S]*?)(\s*)$/.exec(s), out=en?core(m[2]):m[2];
+    if(en && window.__i18nMiss && CYR.test(out)) window.__i18nMiss[m[2]]=1;
+    return m[1]+money(out)+m[3];
+  }
+  function untr(s){ var k=REV[String(s||"").trim().toLowerCase()]; return k||s; }
+  var ATTRS=["placeholder","aria-label","data-empty","title"];
+  function skip(n){ var p=n.parentNode; return !p || p.nodeName==="SCRIPT" || p.nodeName==="STYLE" || p.nodeName==="TEXTAREA" || (p.closest && p.closest("[data-noi18n]")); }
+  function doText(n){
+    if(skip(n)) return; var v=n.nodeValue; if(!v || !(CYR.test(v) || v.indexOf("₽")>=0)) return;
+    var t=tr(v); if(t!==v){ n.__ru=v; n.__en=t; n.nodeValue=t; }
+  }
+  function doEl(el){
+    for(var i=0;i<ATTRS.length;i++){ var a=ATTRS[i], v=el.getAttribute && el.getAttribute(a);
+      if(v && (CYR.test(v) || v.indexOf("₽")>=0)){ var t=tr(v); if(t!==v){ (el.__ruA=el.__ruA||{})[a]=[v,t]; el.setAttribute(a,t); } } }
+  }
+  function walk(root){
+    if(root.nodeType===3){ doText(root); return; }
+    if(root.nodeType!==1) return;
+    doEl(root);
+    var w=document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT|NodeFilter.SHOW_TEXT, null), n;
+    while((n=w.nextNode())){ if(n.nodeType===3) doText(n); else doEl(n); }
+  }
+  function restore(){
+    var w=document.createTreeWalker(document.documentElement, NodeFilter.SHOW_ELEMENT|NodeFilter.SHOW_TEXT, null), n;
+    while((n=w.nextNode())){
+      if(n.nodeType===3){ if(n.__ru!==undefined && n.nodeValue===n.__en) n.nodeValue=n.__ru; n.__ru=undefined; }
+      else if(n.__ruA){ for(var a in n.__ruA){ if(n.getAttribute(a)===n.__ruA[a][1]) n.setAttribute(a,n.__ruA[a][0]); } n.__ruA=null; }
+    }
+  }
+  var obs=new MutationObserver(function(list){
+    if(!act()) return;
+    for(var i=0;i<list.length;i++){ var m=list[i];
+      if(m.type==="characterData") doText(m.target);
+      else if(m.type==="attributes") doEl(m.target);
+      else for(var k=0;k<m.addedNodes.length;k++) walk(m.addedNodes[k]);
+    }
+  });
+  obs.observe(document.documentElement,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:ATTRS});
+  var RU_TITLE=document.title;
+  function apply(){
+    document.documentElement.lang=LANG;
+    restore(); document.title=RU_TITLE;
+    if(act()){ document.title=tr(RU_TITLE); walk(document.documentElement); }
+    var b=document.getElementById("langBtn"); if(b) b.querySelector("b").textContent=LANG.toUpperCase();
+    document.querySelectorAll("#lgSeg button").forEach(function(x){ x.classList.toggle("active", x.dataset.l===LANG); });
+    document.querySelectorAll("#curGrid button").forEach(function(x){ x.classList.toggle("on", x.dataset.c===CUR); });
+  }
+  function refresh(){
+    apply();
+    try{ if(typeof renderAll==="function") renderAll(); if(typeof refreshSelects==="function") refreshSelects(); if(typeof rpRender==="function") rpRender(); }catch(e){}
+  }
+  function set(l){ LANG=l==="en"?"en":"ru"; try{ localStorage.setItem("budget_lang_v1",LANG); }catch(e){} refresh(); }
+  function setCur(c){ CUR=c||"₽"; try{ localStorage.setItem("budget_cur_v1",CUR); }catch(e){} refresh(); }
+  var _c=window.confirm, _a=window.alert;
+  window.confirm=function(s){ return _c.call(window, tr(s)); };
+  window.alert=function(s){ return _a.call(window, tr(s)); };
+  return {tr:tr, untr:untr, set:set, setCur:setCur, apply:apply};
+})();
+function TR(s){ return I18N.tr(s); }
+function UNTR(s){ return I18N.untr(s); }
+(function(){
+  var acts=document.querySelector(".hdr .acts"); if(!acts) return;
+  var b=document.createElement("button"); b.className="hbtn langbtn"; b.id="langBtn"; b.setAttribute("data-noi18n","1");
+  b.setAttribute("aria-label","Language / Язык");
+  b.innerHTML='<svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.8 3.9 5.8 3.9 9s-1.3 6.2-3.9 9c-2.6-2.8-3.9-5.8-3.9-9S9.400 5.800 12 3z"/></svg><b></b>';
+  acts.insertBefore(b, acts.firstChild);
+  var ov=document.getElementById("ov"), sh=document.createElement("div"); sh.className="sheet"; sh.id="shLang";
+  sh.innerHTML='<div class="handle"></div><h3>Язык и валюта</h3><div class="lbl2">Язык</div>'+
+    '<div class="tt" id="lgSeg" data-noi18n="1"><button class="lg" data-l="ru">Русский</button><button class="lg" data-l="en">English</button></div>'+
+    '<div class="lbl2" style="margin-top:14px">Валюта</div><div class="curgrid" id="curGrid" data-noi18n="1">'+
+    CURS.map(function(c){ return '<button data-c="'+c[0]+'"><span>'+c[0]+'</span><small>'+c[1]+'</small></button>'; }).join("")+
+    '</div><div class="note">Меняется только знак валюты — суммы не пересчитываются.</div>';
+  if(ov) ov.appendChild(sh);
+  sh.querySelectorAll("#lgSeg button").forEach(function(x){ x.onclick=function(){ I18N.set(x.dataset.l); }; });
+  sh.querySelectorAll("#curGrid button").forEach(function(x){ x.onclick=function(){ I18N.setCur(x.dataset.c); }; });
+  b.onclick=function(){ openSheet("shLang"); };
+  I18N.apply();
+})();
+</script>
 <script>
 var EXP_CATS = ["Автомобиль","Продукты питания","Развлечения и подарки","Здоровье","Шоппинг","ЖКУ","Кредит/долги","Поездки (транспорт, такси)","Путешествия","Учеба","Связь (телефон, интернет)","Налоги","Строительные материалы ремонт","Кафе, рестораны","Спорт","Прочее","Обмен на валюту"];
 var INC_CATS = ["Зарплата","Подработка","Процент с вклада","Премия","Налоговый вычет","Аренда жилья","Разное","Обмен на валюту"];
@@ -1116,7 +1392,14 @@ var KW_EXP=[
 function pad(s){ return " "+s.toLowerCase().replace(/[^а-яёa-z0-9]+/g," ").trim()+" "; }
 function fixB(list){ return list.map(function(k){ return [new RegExp(k[0].source.replace(/\\b/g," ")), k[1]]; }); }
 KW_INC=fixB(KW_INC); KW_EXP=fixB(KW_EXP);
-var INC_VERBS=/получил|получила|пришл[аио]|поступ|доход|вернули|перевел[аи]? мне|скинул[аи]? мне/;
+KW_INC=KW_INC.concat(fixB([[/salary|paycheck|wage/,"Зарплата"],[/bonus/,"Премия"],[/freelance|side job|\bgig\b/,"Подработка"],[/interest|deposit/,"Процент с вклада"],[/tax refund|deduction/,"Налоговый вычет"],[/rental|tenant|\brent income/,"Аренда жилья"],[/cashback|refund/,"Разное"]]));
+KW_EXP=KW_EXP.concat(fixB([[/grocer|supermarket|\bfood\b/,"Продукты питания"],[/taxi|uber|metro|subway|\bbus\b|\btrain\b|transport/,"Поездки (транспорт, такси)"],
+ [/\bgas\b|fuel|petrol|parking|car wash|\bfine\b|\bcar\b/,"Автомобиль"],[/cafe|coffee|restaurant|lunch|dinner|breakfast|pizza|sushi|burger|\bbar\b/,"Кафе, рестораны"],
+ [/utilit|electricity|water bill|\brent\b/,"ЖКУ"],[/pharmacy|doctor|clinic|dentist|medicine|haircut|barber/,"Здоровье"],[/amazon|clothes|shoes|shopping/,"Шоппинг"],
+ [/phone|internet|mobile/,"Связь (телефон, интернет)"],[/\bloan|mortgage|\bdebt/,"Кредит/долги"],[/\bgym\b|sport|fitness|\bpool\b|yoga|tennis/,"Спорт"],
+ [/gift|flowers|cinema|movie|theat|concert|\bgame/,"Развлечения и подарки"],[/repair|paint|\btools?\b|hardware/,"Строительные материалы ремонт"],
+ [/hotel|flight|ticket|\btrip\b|vacation|\bvisa\b/,"Путешествия"],[/course|\bbooks?\b|tuition/,"Учеба"],[/\btax/,"Налоги"],[/currency|dollar|euro|exchange/,"Обмен на валюту"]]));
+var INC_VERBS=/received|got paid|income|получил|получила|пришл[аио]|поступ|доход|вернули|перевел[аи]? мне|скинул[аи]? мне/;
 function parseOne(part, baseDate){
   var s=part.toLowerCase().replace(/ /g," ");
   var m=s.match(/(\d{1,3}(?:[ ]\d{3})+|\d+)(?:[.,](\d{1,2}))?\s*(к|k|тыс[а-яё]*)?(?![а-яёa-z])/);
@@ -1125,9 +1408,9 @@ function parseOne(part, baseDate){
   if(m[3]) a*=1000;
   if(!(a>0)) return null;
   var rest=(s.slice(0,m.index)+" "+s.slice(m.index+m[0].length))
-    .replace(/руб[а-яё.]*|₽/g," ")
+    .replace(/руб[а-яё.]*|[₽$€£¥₸₺₾֏₴]/g," ")
     .replace(/(^|\s)(р\.?|вчера|позавчера|сегодня)(?=\s|$)/g," ")
-    .replace(/(^|\s)(на|за|в|во|потратил\S*|купил\S*|заплатил\S*|оплатил\S*|отдал\S*|получил\S*|пришл\S*|поступил\S*|мне)(?=\s|$)/g," ")
+    .replace(/(^|\s)(on|for|at|the|a|spent|paid|bought|got|received|yesterday|today)(?=\s|$)/g," ").replace(/(^|\s)(на|за|в|во|потратил\S*|купил\S*|заплатил\S*|оплатил\S*|отдал\S*|получил\S*|пришл\S*|поступил\S*|мне)(?=\s|$)/g," ")
     .replace(/\s+/g," ").trim();
   var type="exp", cat="Прочее", hit=null, i, sk=pad(s);
   for(i=0;i<KW_INC.length;i++){ if(KW_INC[i][0].test(sk)){ type="inc"; cat=KW_INC[i][1]; hit=KW_INC[i][0]; break; } }
@@ -1141,7 +1424,7 @@ function parseOne(part, baseDate){
 }
 function parseLocal(text){
   var d=new Date(), low=text.toLowerCase();
-  if(/позавчера/.test(low)) d.setDate(d.getDate()-2); else if(/вчера/.test(low)) d.setDate(d.getDate()-1);
+  if(/позавчера/.test(low)) d.setDate(d.getDate()-2); else if(/вчера|yesterday/.test(low)) d.setDate(d.getDate()-1);
   var base=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
   return text.split(/\s*(?:;|\n|\+|,\s|\sи\s)\s*/i).map(function(p){ return parseOne(p, base); }).filter(Boolean);
 }
@@ -1170,8 +1453,8 @@ function shareOrDownload(name, text, mime){
 }
 function stamp(){ var d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
 document.getElementById("csvBtn").onclick=function(){
-  var rows=[["Дата","Тип","Категория","Сумма","Комментарий"]];
-  tx.slice().sort(function(a,b){return (a.date||"").localeCompare(b.date||"");}).forEach(function(t){ rows.push([t.date||"", t.type==="inc"?"Доход":"Расход", t.category||"", String(t.amount).replace(".",","), t.note||""]); });
+  var rows=[["Дата","Тип","Категория","Сумма","Комментарий"].map(TR)];
+  tx.slice().sort(function(a,b){return (a.date||"").localeCompare(b.date||"");}).forEach(function(t){ rows.push([t.date||"", TR(t.type==="inc"?"Доход":"Расход"), TR(t.category||""), String(t.amount).replace(".",","), t.note||""]); });
   function q(v){ var s=String(v); return /[";\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s; }
   shareOrDownload("budget-"+stamp()+".csv", "﻿"+rows.map(function(r){return r.map(q).join(";");}).join("\r\n"), "text/csv");
 };
@@ -1199,7 +1482,7 @@ function parseCsv(text){
     var date=(r[0]||"").trim(), dm=date.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
     if(dm) date=dm[3]+"-"+dm[2].padStart(2,"0")+"-"+dm[1].padStart(2,"0");
     var a=parseAmt(r[3]); if(!(a>0) || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return;
-    out.push({id:uid(), type:/доход|inc/i.test(r[1])?"inc":"exp", amount:a, category:(r[2]||"Прочее").trim(), note:(r[4]||"").trim(), date:date});
+    out.push({id:uid(), type:/доход|inc/i.test(r[1])?"inc":"exp", amount:a, category:UNTR((r[2]||"Прочее").trim()), note:(r[4]||"").trim(), date:date});
   });
   return out;
 }
@@ -1703,8 +1986,9 @@ function pagesToPdf(pages, title){
     var out=new Uint8Array(pos), o=0; parts.forEach(function(p){ out.set(p,o); o+=p.length; }); return out;
   });
 }
+(function(){ var _t=Report.prototype.t; Report.prototype.t=function(){ var a=Array.prototype.slice.call(arguments); a[0]=TR(a[0]==null?"":String(a[0])); return _t.apply(this,a); }; })();
 function reportFileName(){ return "budget-report-"+(periodIdx===-1?"all":now0.getFullYear()+"-"+String(periodIdx+1).padStart(2,"0"))+(rpActive()?"-selected":"")+".pdf"; }
-function makeReportPdf(){ var pages=buildReport(); return pagesToPdf(pages, "Отчёт о бюджете — "+rpPeriodLabel()); }
+function makeReportPdf(){ var pages=buildReport(); return pagesToPdf(pages, TR("Отчёт о бюджете — "+rpPeriodLabel())); }
 var pendingPdf=null;
 function pdfBtnLabel(){ var b=document.getElementById("pdfBtn"); if(b && !b.disabled && !pendingPdf){ var n=rpActive()?rpChosen().length:0; b.textContent=rpNone()?"Выбери хотя бы одну категорию":"PDF-отчёт · "+rpPeriodLabel()+(n?" · "+n+" "+plural(n,["категория","категории","категорий"]):""); } }
 document.getElementById("shareBtn").addEventListener("click", function(){ pendingPdf=null; pdfBtnLabel(); });
@@ -1737,12 +2021,12 @@ function rpAvail(){
 function rpChosen(av){ av=av||rpAvail(); return av.filter(function(o){ return !rpSel || !!rpSel[o.k]; }); }
 function rpActive(){ if(!rpSel) return false; var av=rpAvail(); return rpChosen(av).length<av.length; }
 function rpNone(){ var av=rpAvail(); return av.length>0 && rpChosen(av).length===0; }
-function rpNames(){ return rpChosen().map(function(o){ return o.cat; }).join(", "); }
+function rpNames(){ return rpChosen().map(function(o){ return TR(o.cat); }).join(", "); }
 function rpSummary(){
   var av=rpAvail(), ch=rpChosen(av);
   if(!av.length || ch.length===av.length) return "все · "+(av.length?av.length+" "+plural(av.length,["категория","категории","категорий"]):"нет операций за период");
   if(!ch.length) return "ничего не выбрано";
-  if(ch.length<=2) return ch.map(function(o){ return o.cat; }).join(", ");
+  if(ch.length<=2) return ch.map(function(o){ return TR(o.cat); }).join(", ");
   return "выбрано "+ch.length+" из "+av.length;
 }
 function rpRender(){
@@ -1970,6 +2254,7 @@ document.addEventListener("visibilitychange", function(){
 
 /* ===== окна снизу: крестик, смахивание вниз, Esc ===== */
 (function(){
+  function canScroll(sh){ return sh.scrollHeight>sh.clientHeight+2; }
   var X='<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>';
   document.querySelectorAll(".sheet").forEach(function(sh){
     var b=document.createElement("button"); b.className="sheet-x"; b.setAttribute("aria-label","Закрыть"); b.innerHTML=X;
@@ -1978,7 +2263,7 @@ document.addEventListener("visibilitychange", function(){
     sh.addEventListener("touchstart", function(e){
       if(e.touches.length!==1) return;
       fromHandle = !!e.target.closest(".handle") || (e.touches[0].clientY - sh.getBoundingClientRect().top) < 56;
-      if(!fromHandle && sh.scrollTop>0) { drag=false; return; }
+      if(!fromHandle && canScroll(sh) && sh.scrollTop>0) { drag=false; return; }
       if(e.target.closest(".wlist,.mrows,textarea")) { if(!fromHandle){ drag=false; return; } }
       y0=e.touches[0].clientY; dy=0; t0=Date.now(); drag=true;
     }, {passive:true});
@@ -1986,7 +2271,7 @@ document.addEventListener("visibilitychange", function(){
       if(!drag) return;
       dy=e.touches[0].clientY-y0;
       if(dy<=0){ sh.style.transform=""; return; }
-      if(!fromHandle && sh.scrollTop>0){ drag=false; sh.style.transform=""; return; }
+      if(!fromHandle && canScroll(sh) && sh.scrollTop>0){ drag=false; sh.style.transform=""; return; }
       e.preventDefault();
       sh.classList.add("dragging"); sh.style.transform="translateY("+dy+"px)";
       document.getElementById("ov").style.background="rgba(0,0,0,"+Math.max(0.15, 0.6-dy/600)+")";
@@ -2007,7 +2292,7 @@ document.addEventListener("visibilitychange", function(){
   // пустая дата окончания вклада — подсказка «Без срока»
   function markDates(){ document.querySelectorAll('.fld input[type=date][data-empty]').forEach(function(i){ i.classList.toggle("empty", !i.value); }); }
   document.querySelectorAll('.fld input[type=date][data-empty]').forEach(function(i){ i.addEventListener("input",markDates); i.addEventListener("change",markDates); i.addEventListener("focus",function(){ i.classList.remove("empty"); }); i.addEventListener("blur",markDates); });
-  var _open=openSheet; openSheet=function(id){ _open(id); markDates(); var sh=document.getElementById(id); if(sh){ sh.scrollTop=0; sh.style.transform=""; } };
+  var _open=openSheet; openSheet=function(id){ _open(id); markDates(); var sh=document.getElementById(id); if(sh){ sh.scrollTop=0; sh.style.transform=""; sh.style.touchAction=canScroll(sh)?"pan-y":"none"; } };
 })();
 
 lockBoot();
