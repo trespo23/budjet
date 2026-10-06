@@ -473,6 +473,8 @@ html.light [style*="color:#3FD37F"]{color:#129C5C !important;}
 html.light .bcol .bb.inc,html.light .bd.inc .bcol .bb{background:linear-gradient(180deg,#3CCB95 0%,#1B8A62 100%);}
 html.light .tgl input{accent-color:#7C6CF2;}
 .tt button.active.th{background:rgba(124,108,242,.22);color:var(--text);}
+.day{display:flex;justify-content:space-between;align-items:baseline;gap:12px;}
+.day span:last-child{white-space:nowrap;}
 </style>
 <script>
 /* тема: авто / светлая / тёмная */
@@ -497,7 +499,7 @@ var THEME=(function(){
 <body>
 <div class="lock" id="lockScr" aria-live="polite">
   <div class="lk-in">
-    <div class="lk-logo"><svg viewBox="0 0 64 64" width="64" height="64"><defs><linearGradient id="lkb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9D8FFF"/><stop offset="1" stop-color="#5B5FD8"/></linearGradient></defs><rect width="64" height="64" rx="15" fill="#171A2A"/><rect x="13" y="34" width="7" height="18" rx="3.5" fill="url(#lkb)"/><rect x="24" y="26" width="7" height="26" rx="3.5" fill="url(#lkb)"/><rect x="35" y="30" width="7" height="22" rx="3.5" fill="url(#lkb)"/><rect x="46" y="16" width="7" height="36" rx="3.5" fill="url(#lkb)"/></svg></div>
+    <div class="lk-logo"><svg viewBox="0 0 1024 1024" width="64" height="64" style="border-radius:15px;display:block"><defs><linearGradient id="lkbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9A8BFF"/><stop offset="1" stop-color="#4E46D6"/></linearGradient><clipPath id="lkc"><circle cx="400" cy="512" r="236"/></clipPath></defs><rect width="1024" height="1024" fill="url(#lkbg)"/><circle cx="400" cy="512" r="236" fill="#F5F6F8"/><circle cx="624" cy="512" r="236" fill="#14162A"/><circle cx="624" cy="512" r="236" fill="#5CE6B4" clip-path="url(#lkc)"/></svg></div>
     <div class="lk-title" id="lkTitle">Введите ПИН-код</div>
     <div class="lk-sub" id="lkSub"></div>
     <div class="lk-dots" id="lkDots"><i></i><i></i><i></i><i></i></div>
@@ -1264,7 +1266,7 @@ function renderOps(){
   if(opsTab!=="all" && expMode==="cat"){ renderCatGroups(v, box, tot, opsTab); return; }
   var sorted=v.slice().sort(byDateDesc), groups=[], by={};
   sorted.forEach(function(t){ var k=t.date||""; if(!by[k]){by[k]=[];groups.push(k);} by[k].push(t); });
-  box.innerHTML = groups.map(function(k){ return '<div class="day">'+esc(dayLabel(k))+'</div>'+by[k].map(txRow).join(""); }).join("");
+  box.innerHTML = groups.map(function(k){ return '<div class="day"><span>'+esc(dayLabel(k))+'</span>'+(opsTab!=="all"?'<span class="num">'+(opsTab==="inc"?"+":"−")+fmt(by[k].reduce(function(a,t){return a+t.amount;},0))+'</span>':'')+'</div>'+by[k].map(txRow).join(""); }).join("");
   bindRows(box);
 }
 function renderCatGroups(v, box, total, kind){
